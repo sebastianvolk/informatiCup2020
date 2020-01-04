@@ -1,12 +1,10 @@
 package de.nordakademie.informaticup.pandemicfighter.factories;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.nordakademie.informaticup.pandemicfighter.IGameFactory;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.events.Event;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,6 +15,7 @@ public class GameFactory extends ObjectWithEventsFactory implements IGameFactory
     private static final String KEY_POINTS = "points";
     private static final String KEY_CITIES = "cities";
     private static final String KEY_EVENTS = "events";
+    private static final String KEY_ERROR = "error";
 
     @Override
     public Game createGame(JsonObject jsonGame) {
@@ -28,6 +27,9 @@ public class GameFactory extends ObjectWithEventsFactory implements IGameFactory
             game.setCities(createCities(jsonGame.get(KEY_CITIES).getAsJsonObject()));
             if (jsonGame.has(KEY_EVENTS)) {
                 game.setEvents(createEvents(jsonGame.get(KEY_EVENTS).getAsJsonArray()));
+            }
+            if (jsonGame.has(KEY_ERROR)) {
+                System.out.println(jsonGame.get(KEY_ERROR).getAsString());
             }
         } catch (NullPointerException e) {
             System.out.println("Not all required fields were set.");
