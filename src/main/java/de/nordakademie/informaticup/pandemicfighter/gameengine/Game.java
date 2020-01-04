@@ -8,7 +8,7 @@ public class Game {
     private String outcome;
     private int round;
     private int points;
-    private City[] cities;
+    private ArrayList<City> cities;
     private ArrayList<Event> events;
 
     public String getOutcome() {
@@ -35,11 +35,11 @@ public class Game {
         this.points = points;
     }
 
-    public City[] getCities() {
+    public ArrayList<City> getCities() {
         return cities;
     }
 
-    public void setCities(City[] cities) {
+    public void setCities(ArrayList<City> cities) {
         this.cities = cities;
     }
 

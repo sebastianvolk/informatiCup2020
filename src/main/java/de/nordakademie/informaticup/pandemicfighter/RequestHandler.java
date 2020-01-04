@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import de.nordakademie.informaticup.pandemicfighter.factories.GameFactory;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +21,10 @@ public class RequestHandler implements HttpHandler {
         System.out.println("Incoming request: " + httpExchange.getRequestURI());
         httpExchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
         String method = httpExchange.getRequestMethod();
-        String query = httpExchange.getRequestURI().getQuery();
         String path = httpExchange.getRequestURI().getPath();
+
+        IGameFactory gameFactory = new GameFactory();
+
         if (method.equals("POST") && path.equals("/")) {
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithModifiers(Modifier.TRANSIENT)
@@ -31,6 +35,7 @@ public class RequestHandler implements HttpHandler {
             String outcome = jsonRequestObject.get("outcome").getAsString();
             System.out.println("Round: " + round + " Outcome: " + outcome);
             System.out.println(jsonRequestObject.toString());
+            Game game = gameFactory.createGame(jsonRequestObject);
 
             JsonObject jsonResponseObject = new JsonObject();
             jsonResponseObject.addProperty("type", "endRound");
