@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import de.nordakademie.informaticup.pandemicfighter.factories.GameFactory;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.GameExecutor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,10 +37,9 @@ public class RequestHandler implements HttpHandler {
             System.out.println("Round: " + round + " Outcome: " + outcome);
             System.out.println(jsonRequestObject.toString());
             Game game = gameFactory.createGame(jsonRequestObject);
+            GameExecutor gameExecutor = new GameExecutor(game);
 
-            JsonObject jsonResponseObject = new JsonObject();
-            jsonResponseObject.addProperty("type", "endRound");
-            String response = jsonResponseObject.toString();
+            String response = gameExecutor.getAction().toString();
             httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes(StandardCharsets.UTF_8));
