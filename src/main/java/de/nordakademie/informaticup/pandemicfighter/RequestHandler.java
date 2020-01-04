@@ -30,6 +30,7 @@ public class RequestHandler implements HttpHandler {
             int round = jsonRequestObject.get("round").getAsInt();
             String outcome = jsonRequestObject.get("outcome").getAsString();
             System.out.println("Round: " + round + " Outcome: " + outcome);
+            System.out.println(jsonRequestObject.toString());
 
             JsonObject jsonResponseObject = new JsonObject();
             jsonResponseObject.addProperty("type", "endRound");
