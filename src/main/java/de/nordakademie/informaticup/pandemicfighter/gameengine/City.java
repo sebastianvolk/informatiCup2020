@@ -9,14 +9,14 @@ public class City {
     private String latitude;
     private String longitude;
     private int population;
-    private String[] connections;
+    private ArrayList<String> connections;
     private ArrayList<Event> events;
     private String economy;
     private String government;
     private String hygiene;
     private String awareness;
 
-    public City(String name, String latitude, String longitude, String[] connections) {
+    public City(String name, String latitude, String longitude, ArrayList<String> connections) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -63,7 +63,7 @@ public class City {
         return population;
     }
 
-    public String[] getConnections() {
+    public ArrayList<String> getConnections() {
         return connections;
     }
 
