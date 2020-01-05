@@ -2,12 +2,12 @@ package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 
 public class Pathogen {
     private String name;
-    private String infectivity;
-    private String mobility;
-    private String duration;
-    private String lethality;
+    private double infectivity;
+    private double mobility;
+    private double duration;
+    private double lethality;
 
-    public Pathogen(String name, String infectivity, String mobility, String duration, String lethality) {
+    public Pathogen(String name, double infectivity, double mobility, double duration, double lethality) {
         this.name = name;
         this.infectivity = infectivity;
         this.mobility = mobility;
@@ -19,19 +19,19 @@ public class Pathogen {
         return name;
     }
 
-    public String getInfectivity() {
+    public double getInfectivity() {
         return infectivity;
     }
 
-    public String getMobility() {
+    public double getMobility() {
         return mobility;
     }
 
-    public String getDuration() {
+    public double getDuration() {
         return duration;
     }
 
-    public String getLethality() {
+    public double getLethality() {
         return lethality;
     }
 }

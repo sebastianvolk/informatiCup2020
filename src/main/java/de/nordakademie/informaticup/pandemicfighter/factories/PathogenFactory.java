@@ -1,6 +1,7 @@
 package de.nordakademie.informaticup.pandemicfighter.factories;
 
 import com.google.gson.JsonObject;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.ValueUtility;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 
 public class PathogenFactory {
@@ -16,11 +17,10 @@ public class PathogenFactory {
 
         Pathogen pathogen = new Pathogen(
                 jsonPathogen.get(KEY_NAME).getAsString(),
-                jsonPathogen.get(KEY_INFECTIVITY).getAsString(),
-                jsonPathogen.get(KEY_MOBILITY).getAsString(),
-                jsonPathogen.get(KEY_DURATION).getAsString(),
-                jsonPathogen.get(KEY_LETHALITY).getAsString()
-
+                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_INFECTIVITY).getAsString()),
+                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_MOBILITY).getAsString()),
+                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_DURATION).getAsString()),
+                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_LETHALITY).getAsString())
         );
         return pathogen;
 

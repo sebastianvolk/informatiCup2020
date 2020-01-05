@@ -94,8 +94,4 @@ public class ActionProvider {
         jsonObject.addProperty("city", city.getName());
         return jsonObject;
     }
-
-
-
-
 }

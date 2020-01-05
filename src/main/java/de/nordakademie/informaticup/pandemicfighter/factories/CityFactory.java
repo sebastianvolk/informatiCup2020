@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.ValueUtility;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 
 import java.util.ArrayList;
@@ -33,10 +34,10 @@ class CityFactory extends ObjectWithEventsFactory {
             city.setEvents(createEvents(jsonCity.get(KEY_EVENTS).getAsJsonArray()));
         }
 
-        city.setEconomy(jsonCity.get(KEY_ECONOMY).getAsString());
-        city.setGovernment(jsonCity.get(KEY_GOVERNMENT).getAsString());
-        city.setHygiene(jsonCity.get(KEY_HYGIENE).getAsString());
-        city.setAwareness(jsonCity.get(KEY_AWARENESS).getAsString());
+        city.setEconomy(ValueUtility.getValueEqualToString(jsonCity.get(KEY_ECONOMY).getAsString()));
+        city.setGovernment(ValueUtility.getValueEqualToString(jsonCity.get(KEY_GOVERNMENT).getAsString()));
+        city.setHygiene(ValueUtility.getValueEqualToString(jsonCity.get(KEY_HYGIENE).getAsString()));
+        city.setAwareness(ValueUtility.getValueEqualToString(jsonCity.get(KEY_AWARENESS).getAsString()));
         return city;
     }
 
