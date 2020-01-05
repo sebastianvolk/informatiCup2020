@@ -11,4 +11,8 @@ public class PathogenEncounteredEvent extends Event{
         this.pathogen = pathogen;
         this.round = round;
     }
+
+    public Pathogen getPathogen() {
+        return pathogen;
+    }
 }
