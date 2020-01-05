@@ -1,7 +1,7 @@
 package de.nordakademie.informaticup.pandemicfighter.factories;
 
 import com.google.gson.JsonObject;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.Pathogen;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 
 public class PathogenFactory {
 

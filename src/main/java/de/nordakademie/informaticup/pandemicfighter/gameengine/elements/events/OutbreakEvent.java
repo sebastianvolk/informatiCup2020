@@ -1,8 +1,6 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine.events;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events;
 
-import de.nordakademie.informaticup.pandemicfighter.gameengine.Pathogen;
-
-import java.nio.file.Path;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 
 public class OutbreakEvent extends Event {
     private Pathogen pathogen;

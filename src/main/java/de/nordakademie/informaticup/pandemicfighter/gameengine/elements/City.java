@@ -1,6 +1,6 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 
-import de.nordakademie.informaticup.pandemicfighter.gameengine.events.Event;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 
 import java.util.ArrayList;
 

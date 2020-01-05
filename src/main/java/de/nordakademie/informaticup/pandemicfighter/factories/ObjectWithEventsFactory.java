@@ -3,7 +3,7 @@ package de.nordakademie.informaticup.pandemicfighter.factories;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.events.Event;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 
 import java.util.ArrayList;
 
