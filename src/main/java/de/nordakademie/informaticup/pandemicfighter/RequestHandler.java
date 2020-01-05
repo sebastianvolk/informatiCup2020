@@ -37,9 +37,12 @@ public class RequestHandler implements HttpHandler {
             System.out.println("Round: " + round + " Outcome: " + outcome);
             System.out.println(jsonRequestObject.toString());
             Game game = gameFactory.createGame(jsonRequestObject);
-            GameExecutor gameExecutor = new GameExecutor(game);
 
-            String response = gameExecutor.getAction().toString();
+            String response = new GameExecutor(game)
+                    .playRound()
+                    .getAction()
+                    .toString();
+
             httpExchange.sendResponseHeaders(200, response.getBytes(StandardCharsets.UTF_8).length);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes(StandardCharsets.UTF_8));

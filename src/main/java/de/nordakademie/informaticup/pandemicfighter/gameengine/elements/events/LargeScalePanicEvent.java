@@ -1,4 +1,4 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine.events;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events;
 
 public class LargeScalePanicEvent extends Event{
     private int sinceRound;

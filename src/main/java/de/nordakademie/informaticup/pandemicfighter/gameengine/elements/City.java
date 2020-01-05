@@ -1,13 +1,13 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 
-import de.nordakademie.informaticup.pandemicfighter.gameengine.events.Event;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 
 import java.util.ArrayList;
 
 public class City {
     private String name;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private int population;
     private ArrayList<String> connections;
     private ArrayList<Event> events;
@@ -16,7 +16,7 @@ public class City {
     private String hygiene;
     private String awareness;
 
-    public City(String name, String latitude, String longitude, ArrayList<String> connections) {
+    public City(String name, double latitude, double longitude, ArrayList<String> connections) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -51,11 +51,11 @@ public class City {
         return name;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 

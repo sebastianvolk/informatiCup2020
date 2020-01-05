@@ -8,18 +8,16 @@ public class GameExecutor {
 
     public GameExecutor(Game game) {
         this.game = game;
-        playRound();
     }
 
-    private void playRound(){
-        setAction("endRound");
+    public GameExecutor playRound(){
+        CityProvider.setCities(game.getCities());
+        ActionSelector actionSelector = new ActionSelector(game);
+        action = actionSelector.getAction();
+        return this;
     }
 
-    private void setAction(String actionType){
-        this.action.addProperty("type", actionType);
-    }
-
-    public JsonObject getAction(){
+    public JsonObject getAction() {
         return action;
     }
 }

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.City;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ class CityFactory extends ObjectWithEventsFactory {
     City createCity(JsonObject jsonCity) {
         City city = new City(
                 jsonCity.get(KEY_NAME).getAsString(),
-                jsonCity.get(KEY_LATITUDE).getAsString(),
-                jsonCity.get(KEY_LONGITUDE).getAsString(),
+                jsonCity.get(KEY_LATITUDE).getAsDouble(),
+                jsonCity.get(KEY_LONGITUDE).getAsDouble(),
                 createConnections(jsonCity.get(KEY_CONNECTIONS).getAsJsonArray())
         );
         city.setPopulation(jsonCity.get(KEY_POPULATION).getAsInt());
