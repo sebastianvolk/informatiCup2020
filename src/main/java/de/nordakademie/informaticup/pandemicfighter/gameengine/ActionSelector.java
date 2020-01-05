@@ -10,10 +10,13 @@ public class ActionSelector {
     }
 
     public JsonObject getAction() {
-        JsonObject action = new JsonObject();
+        JsonObject action;
         boolean noOtherAction = true; // TODO: tbd
         if (!"pending".equals(game.getOutcome()) || noOtherAction) {
-            action.addProperty("type", "endRound");
+            action = ActionProvider.endRound();
+        }
+        else {
+            action = ActionProvider.endRound();
         }
         return action;
     }
