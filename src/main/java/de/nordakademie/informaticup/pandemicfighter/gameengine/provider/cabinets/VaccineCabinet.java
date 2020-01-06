@@ -1,11 +1,6 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine.cabinets;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets;
 
 import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.MedicationInDevelopmentEvent;
-
-import java.util.ArrayList;
 
 public class VaccineCabinet {
     private static int currentRound;

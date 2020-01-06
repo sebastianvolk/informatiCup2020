@@ -1,4 +1,4 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.provider;
 
 import com.google.gson.JsonObject;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;

@@ -1,8 +1,9 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine;
 
 import com.google.gson.JsonObject;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.cabinets.MedicationCabinet;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.cabinets.VaccineCabinet;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.CityProvider;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.MedicationCabinet;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.VaccineCabinet;
 
 public class GameExecutor {
     private Game game;

@@ -1,7 +1,6 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine.cabinets;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets;
 
 import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.MedicationInDevelopmentEvent;
 
@@ -28,7 +27,7 @@ public class MedicationCabinet {
         for (int i = 0; i < medicationInDevelopmentEvents.size() && !found; i++) {
             MedicationInDevelopmentEvent medicationInDevelopmentEvent = medicationInDevelopmentEvents.get(i);
             if (medicationInDevelopmentEvent.getPathogen().getName().equals(pathogenName)) {
-                rounds = medicationInDevelopmentEvent.getUntilRound() + 1 - currentRound;
+                rounds = medicationInDevelopmentEvent.getUntilRound() - currentRound;
                 found = true;
             }
         }
