@@ -1,22 +1,22 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 
-import de.nordakademie.informaticup.pandemicfighter.gameengine.events.Event;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 
 import java.util.ArrayList;
 
 public class City {
     private String name;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private int population;
     private ArrayList<String> connections;
     private ArrayList<Event> events;
-    private String economy;
-    private String government;
-    private String hygiene;
-    private String awareness;
+    private double economy;
+    private double government;
+    private double hygiene;
+    private double awareness;
 
-    public City(String name, String latitude, String longitude, ArrayList<String> connections) {
+    public City(String name, double latitude, double longitude, ArrayList<String> connections) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -31,19 +31,19 @@ public class City {
         this.events = events;
     }
 
-    public void setEconomy(String economy) {
+    public void setEconomy(double economy) {
         this.economy = economy;
     }
 
-    public void setGovernment(String government) {
+    public void setGovernment(double government) {
         this.government = government;
     }
 
-    public void setHygiene(String hygiene) {
+    public void setHygiene(double hygiene) {
         this.hygiene = hygiene;
     }
 
-    public void setAwareness(String awareness) {
+    public void setAwareness(double awareness) {
         this.awareness = awareness;
     }
 
@@ -51,11 +51,11 @@ public class City {
         return name;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -71,19 +71,19 @@ public class City {
         return events;
     }
 
-    public String getEconomy() {
+    public double getEconomy() {
         return economy;
     }
 
-    public String getGovernment() {
+    public double getGovernment() {
         return government;
     }
 
-    public String getHygiene() {
+    public double getHygiene() {
         return hygiene;
     }
 
-    public String getAwareness() {
+    public double getAwareness() {
         return awareness;
     }
 }

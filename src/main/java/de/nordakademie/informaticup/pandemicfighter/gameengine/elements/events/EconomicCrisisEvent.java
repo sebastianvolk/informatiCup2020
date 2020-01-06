@@ -1,4 +1,4 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine.events;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events;
 
 public class EconomicCrisisEvent extends Event{
     private int sinceRound;
@@ -6,5 +6,9 @@ public class EconomicCrisisEvent extends Event{
     public EconomicCrisisEvent(int sinceRound) {
         super("economicCrisis");
         this.sinceRound = sinceRound;
+    }
+
+    public int getSinceRound() {
+        return sinceRound;
     }
 }

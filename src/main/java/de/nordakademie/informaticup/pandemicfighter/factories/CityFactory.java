@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.City;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.ValueUtility;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 
 import java.util.ArrayList;
 
@@ -23,8 +24,8 @@ class CityFactory extends ObjectWithEventsFactory {
     City createCity(JsonObject jsonCity) {
         City city = new City(
                 jsonCity.get(KEY_NAME).getAsString(),
-                jsonCity.get(KEY_LATITUDE).getAsString(),
-                jsonCity.get(KEY_LONGITUDE).getAsString(),
+                jsonCity.get(KEY_LATITUDE).getAsDouble(),
+                jsonCity.get(KEY_LONGITUDE).getAsDouble(),
                 createConnections(jsonCity.get(KEY_CONNECTIONS).getAsJsonArray())
         );
         city.setPopulation(jsonCity.get(KEY_POPULATION).getAsInt());
@@ -33,10 +34,10 @@ class CityFactory extends ObjectWithEventsFactory {
             city.setEvents(createEvents(jsonCity.get(KEY_EVENTS).getAsJsonArray()));
         }
 
-        city.setEconomy(jsonCity.get(KEY_ECONOMY).getAsString());
-        city.setGovernment(jsonCity.get(KEY_GOVERNMENT).getAsString());
-        city.setHygiene(jsonCity.get(KEY_HYGIENE).getAsString());
-        city.setAwareness(jsonCity.get(KEY_AWARENESS).getAsString());
+        city.setEconomy(ValueUtility.getValueEqualToString(jsonCity.get(KEY_ECONOMY).getAsString()));
+        city.setGovernment(ValueUtility.getValueEqualToString(jsonCity.get(KEY_GOVERNMENT).getAsString()));
+        city.setHygiene(ValueUtility.getValueEqualToString(jsonCity.get(KEY_HYGIENE).getAsString()));
+        city.setAwareness(ValueUtility.getValueEqualToString(jsonCity.get(KEY_AWARENESS).getAsString()));
         return city;
     }
 
