@@ -7,4 +7,8 @@ public class EconomicCrisisEvent extends Event{
         super("economicCrisis");
         this.sinceRound = sinceRound;
     }
+
+    public int getSinceRound() {
+        return sinceRound;
+    }
 }

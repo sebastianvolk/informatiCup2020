@@ -9,4 +9,12 @@ public class UprisingEvent extends Event {
         this.participants = participants;
         this.sinceRound = sinceRound;
     }
+
+    public int getParticipants() {
+        return participants;
+    }
+
+    public int getSinceRound() {
+        return sinceRound;
+    }
 }

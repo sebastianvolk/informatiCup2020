@@ -7,4 +7,8 @@ public class AntiVaccinationismEvent extends Event{
         super("antiVaccinationism");
         this.sinceRound = sinceRound;
     }
+
+    public int getSinceRound() {
+        return sinceRound;
+    }
 }

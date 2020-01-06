@@ -15,4 +15,8 @@ public class PathogenEncounteredEvent extends Event{
     public Pathogen getPathogen() {
         return pathogen;
     }
+
+    public int getRound() {
+        return round;
+    }
 }

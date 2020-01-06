@@ -7,4 +7,8 @@ public class LargeScalePanicEvent extends Event{
         super("largeScalePanic");
         this.sinceRound = sinceRound;
     }
+
+    public int getSinceRound() {
+        return sinceRound;
+    }
 }
