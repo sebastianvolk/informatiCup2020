@@ -5,6 +5,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.ActionPr
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.MedicationCabinet;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.PathogenEncounteredEvent;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.VaccineCabinet;
 
 public class ActionSelector {
     private Game game;
@@ -19,13 +20,13 @@ public class ActionSelector {
         if (!"pending".equals(game.getOutcome()) || noOtherAction) {
             PathogenEncounteredEvent pathogenEvent = (PathogenEncounteredEvent) game.getEvents().get(0);
             Pathogen pathogen = pathogenEvent.getPathogen();
-            int roundsUntilMedicationIsAvailable = MedicationCabinet.roundsUntilMedicationIsAvailable(pathogen.getName());
-            if (roundsUntilMedicationIsAvailable == -1) {
-                action = ActionProvider.developMedication(pathogen);
+            int roundsUntilVaccineIsAvailable = VaccineCabinet.roundsUntilVaccineIsAvailable(pathogen.getName());
+            if (roundsUntilVaccineIsAvailable == -1) {
+                action = ActionProvider.developVaccine(pathogen);
             } else {
                 action = ActionProvider.endRound();
             }
-            System.out.println("Medication status: " + roundsUntilMedicationIsAvailable);
+            System.out.println("Vaccine status: " + roundsUntilVaccineIsAvailable);
         }
         return action;
     }
