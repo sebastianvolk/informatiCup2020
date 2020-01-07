@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 
-public class ActionProvider {
+public class JsonActionProvider {
 
     public static JsonObject endRound(){
         JsonObject jsonObject = new JsonObject();
