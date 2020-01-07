@@ -11,7 +11,7 @@ public class PutUnderQuarantineAction extends Action {
     public PutUnderQuarantineAction(City city, int rounds) {
         this.city = city;
         this.rounds = rounds;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

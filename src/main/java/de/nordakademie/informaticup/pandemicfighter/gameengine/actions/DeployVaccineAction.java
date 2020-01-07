@@ -12,7 +12,7 @@ public class DeployVaccineAction extends Action {
     public DeployVaccineAction(Pathogen pathogen, City city) {
         this.pathogen = pathogen;
         this.city = city;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

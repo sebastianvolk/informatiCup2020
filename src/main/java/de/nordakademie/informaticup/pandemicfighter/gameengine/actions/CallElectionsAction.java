@@ -9,7 +9,7 @@ public class CallElectionsAction extends Action {
 
     public CallElectionsAction(City city) {
         this.city = city;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

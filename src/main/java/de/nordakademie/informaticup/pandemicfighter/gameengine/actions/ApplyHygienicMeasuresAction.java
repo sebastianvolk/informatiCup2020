@@ -9,7 +9,7 @@ public class ApplyHygienicMeasuresAction extends Action {
 
     public ApplyHygienicMeasuresAction(City city) {
         this.city = city;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

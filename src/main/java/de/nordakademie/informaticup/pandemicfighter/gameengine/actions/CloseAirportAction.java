@@ -11,7 +11,7 @@ public class CloseAirportAction extends Action {
     public CloseAirportAction(City city, int rounds) {
         this.city = city;
         this.rounds = rounds;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

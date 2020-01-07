@@ -5,7 +5,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.JsonActi
 
 public class EndRoundAction extends Action {
     public EndRoundAction() {
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

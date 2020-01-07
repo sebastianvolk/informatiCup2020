@@ -6,18 +6,15 @@ public abstract class Action {
     private double threatIndicator;
     private int points;
 
-    public Action() {
-        this.threatIndicator = calculateThreatIndicator();
-    }
-
     public abstract JsonObject toJson();
 
     protected abstract double calculateThreatIndicator();
 
     protected abstract int calculatePoints();
 
-    protected void setPoints() {
+    protected void setCharacteristics() {
         points = calculatePoints();
+        threatIndicator = calculateThreatIndicator();
     }
 
     public double getThreatIndicator() {

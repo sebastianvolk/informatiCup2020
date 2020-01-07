@@ -5,6 +5,8 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.PathogenEncounteredEvent;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.MedicationCabinet;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.VaccineCabinet;
 
 import java.util.ArrayList;
 
@@ -19,9 +21,10 @@ public class ActionCreator {
         actions.addAll(getAllPossiblePutUnderQuarantineActions(cities));
         actions.addAll(getAllPossibleCloseAirportActions(cities));
         actions.addAll(getAllPossibleCloseConnectionActions(cities));
-
-
-
+        actions.addAll(getAllPossibleDevelopVaccineActions(pathogens));
+        actions.addAll(getAllPossibleDeployVaccineActions(pathogens, cities));
+        actions.addAll(getAllPossibleDevelopMedicationActions(pathogens));
+        actions.addAll(getAllPossibleDeployMedicationActions(pathogens, cities));
         actions.addAll(getAllPossibleExertInfluenceActions(cities));
         actions.addAll(getAllPossibleCallElectionsActions(cities));
         actions.addAll(getAllPossibleApplyHygienicMeasuresActions(cities));
@@ -87,7 +90,12 @@ public class ActionCreator {
     private ArrayList<Action> getAllPossibleDevelopVaccineActions(ArrayList<Pathogen> pathogens){
         ArrayList<Action> actions = new ArrayList<>();
         for (Pathogen pathogen : pathogens) {
-            //TODO: Cabinets are needed
+            if (-1 == VaccineCabinet.roundsUntilVaccineIsAvailable(pathogen.getName())) {
+                DevelopVaccineAction action = new DevelopVaccineAction(pathogen);
+                if (isActionPossible(action)) {
+                    actions.add(action);
+                }
+            }
         }
         return actions;
     }
@@ -95,7 +103,14 @@ public class ActionCreator {
     private ArrayList<Action> getAllPossibleDeployVaccineActions(ArrayList<Pathogen> pathogens, ArrayList<City> cities){
         ArrayList<Action> actions = new ArrayList<>();
         for (Pathogen pathogen : pathogens) {
-            //TODO: Cabinets are needed
+            if (0 == VaccineCabinet.roundsUntilVaccineIsAvailable(pathogen.getName())) {
+                for (City city : cities) {
+                    DeployVaccineAction action = new DeployVaccineAction(pathogen, city);
+                    if (isActionPossible(action)) {
+                        actions.add(action);
+                    }
+                }
+            }
         }
         return actions;
     }
@@ -103,7 +118,12 @@ public class ActionCreator {
     private ArrayList<Action> getAllPossibleDevelopMedicationActions(ArrayList<Pathogen> pathogens){
         ArrayList<Action> actions = new ArrayList<>();
         for (Pathogen pathogen : pathogens) {
-            //TODO: Cabinets are needed
+            if (-1 == MedicationCabinet.roundsUntilMedicationIsAvailable(pathogen.getName())) {
+                DevelopMedicationAction action = new DevelopMedicationAction(pathogen);
+                if (isActionPossible(action)) {
+                    actions.add(action);
+                }
+            }
         }
         return actions;
     }
@@ -111,7 +131,14 @@ public class ActionCreator {
     private ArrayList<Action> getAllPossibleDeployMedicationActions(ArrayList<Pathogen> pathogens, ArrayList<City> cities){
         ArrayList<Action> actions = new ArrayList<>();
         for (Pathogen pathogen : pathogens) {
-            //TODO: Cabinets are needed
+            if (0 == MedicationCabinet.roundsUntilMedicationIsAvailable(pathogen.getName())) {
+                for (City city : cities) {
+                    DeployMedicationAction action = new DeployMedicationAction(pathogen, city);
+                    if (isActionPossible(action)) {
+                        actions.add(action);
+                    }
+                }
+            }
         }
         return actions;
     }

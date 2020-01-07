@@ -9,7 +9,7 @@ public class ExertInfluenceAction extends Action {
 
     public ExertInfluenceAction(City city) {
         this.city = city;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

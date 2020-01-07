@@ -13,7 +13,7 @@ public class CloseConnectionAction extends Action {
         this.fromCity = fromCity;
         this.toCity = toCity;
         this.rounds = rounds;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

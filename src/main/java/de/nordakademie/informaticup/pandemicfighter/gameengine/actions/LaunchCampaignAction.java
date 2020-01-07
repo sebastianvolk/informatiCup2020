@@ -9,7 +9,7 @@ public class LaunchCampaignAction extends Action {
 
     public LaunchCampaignAction(City city) {
         this.city = city;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override

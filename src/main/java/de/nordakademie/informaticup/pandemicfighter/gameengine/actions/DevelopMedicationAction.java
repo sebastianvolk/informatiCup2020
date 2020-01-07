@@ -9,7 +9,7 @@ public class DevelopMedicationAction extends Action {
 
     public DevelopMedicationAction(Pathogen pathogen) {
         this.pathogen = pathogen;
-        setPoints();
+        setCharacteristics();
     }
 
     @Override
