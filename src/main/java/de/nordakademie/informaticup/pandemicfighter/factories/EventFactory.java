@@ -49,6 +49,25 @@ class EventFactory {
                     jsonEvent.get(KEY_SINCE_ROUND).getAsInt(),
                     jsonEvent.get(KEY_UNTIL_ROUND).getAsInt()
             );
+        } else if ("medicationAvailable".equals(eventType)) {
+            Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
+            event = new MedicationAvailableEvent(
+                    pathogen,
+                    jsonEvent.get(KEY_SINCE_ROUND).getAsInt()
+            );
+        } else if ("vaccineInDevelopment".equals(eventType)) {
+            Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
+            event = new VaccineInDevelopmentEvent(
+                    pathogen,
+                    jsonEvent.get(KEY_SINCE_ROUND).getAsInt(),
+                    jsonEvent.get(KEY_UNTIL_ROUND).getAsInt()
+            );
+        } else if ("vaccineAvailable".equals(eventType)) {
+            Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
+            event = new VaccineAvailableEvent(
+                    pathogen,
+                    jsonEvent.get(KEY_SINCE_ROUND).getAsInt()
+            );
         } else {
             System.out.println("New event type found!");
             System.out.println(jsonEvent.toString());
