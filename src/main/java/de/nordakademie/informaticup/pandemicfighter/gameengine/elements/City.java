@@ -1,6 +1,7 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.OutbreakEvent;
 
 import java.util.ArrayList;
 
@@ -86,4 +87,35 @@ public class City {
     public double getAwareness() {
         return awareness;
     }
+
+    public ArrayList<Pathogen> getPathogensInCity() {
+        ArrayList<Pathogen> pathogens = new ArrayList<>();
+        if (this.events != null) {
+            for (Event event : this.events) {
+                if ("outbreak".equals(event.getType())) {
+                    OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+                    Pathogen pathogen = outbreakEvent.getPathogen();
+                    pathogens.add(pathogen);
+
+                }
+            }
+        }
+        return pathogens;
+    }
+
+    public boolean hasCityPathogenOutbreak(Pathogen pathogen) {
+        boolean result = false;
+        if (this.events != null) {
+            for (Event event : this.events) {
+                if ("outbreak".equals(event.getType())) {
+                    OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+                    if (pathogen == outbreakEvent.getPathogen()) {
+                        result = true;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 }
