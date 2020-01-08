@@ -96,7 +96,6 @@ public class City {
                     OutbreakEvent outbreakEvent = (OutbreakEvent) event;
                     Pathogen pathogen = outbreakEvent.getPathogen();
                     pathogens.add(pathogen);
-
                 }
             }
         }
