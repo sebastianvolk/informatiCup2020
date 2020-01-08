@@ -1,6 +1,7 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine.actions;
 
 import com.google.gson.JsonObject;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.ThreatEvaluator;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.JsonActionProvider;
 
@@ -19,7 +20,7 @@ public class ApplyHygienicMeasuresAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return 1;
+        return new ThreatEvaluator().calculateApplyHygienicMeasure(city);
     }
 
     @Override

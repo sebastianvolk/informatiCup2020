@@ -1,5 +1,6 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine.provider;
 
+import de.nordakademie.informaticup.pandemicfighter.gameengine.ThreatIndicator;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 
 import java.util.ArrayList;
@@ -18,6 +19,17 @@ public class CityProvider {
             connectedCities.add(getCity(connectedCityName));
         }
         return connectedCities;
+    }
+
+    public static ArrayList<City> getCitiesWhichHaveConnectionToGivenCity(City city){
+        ArrayList<City> citiesWithConnectionToGivenCity = new ArrayList<>();
+        for (City gameCity : cities) {
+            ArrayList<City> citiesConnectedToGameCity = getConnectedCities(gameCity);
+            if (citiesConnectedToGameCity.contains(city)){
+                citiesWithConnectionToGivenCity.add(gameCity);
+            }
+        }
+        return citiesWithConnectionToGivenCity;
     }
 
     public static ArrayList<City> getNearCities(City city) {

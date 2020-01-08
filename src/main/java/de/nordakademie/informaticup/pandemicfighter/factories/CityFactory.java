@@ -34,10 +34,10 @@ class CityFactory extends ObjectWithEventsFactory {
             city.setEvents(createEvents(jsonCity.get(KEY_EVENTS).getAsJsonArray()));
         }
 
-        city.setEconomy(ValueUtility.getValueEqualToString(jsonCity.get(KEY_ECONOMY).getAsString()));
-        city.setGovernment(ValueUtility.getValueEqualToString(jsonCity.get(KEY_GOVERNMENT).getAsString()));
-        city.setHygiene(ValueUtility.getValueEqualToString(jsonCity.get(KEY_HYGIENE).getAsString()));
-        city.setAwareness(ValueUtility.getValueEqualToString(jsonCity.get(KEY_AWARENESS).getAsString()));
+        city.setEconomy(ValueUtility.getValueEqualToStringCity(jsonCity.get(KEY_ECONOMY).getAsString()));
+        city.setGovernment(ValueUtility.getValueEqualToStringCity(jsonCity.get(KEY_GOVERNMENT).getAsString()));
+        city.setHygiene(ValueUtility.getValueEqualToStringCity(jsonCity.get(KEY_HYGIENE).getAsString()));
+        city.setAwareness(ValueUtility.getValueEqualToStringCity(jsonCity.get(KEY_AWARENESS).getAsString()));
         return city;
     }
 

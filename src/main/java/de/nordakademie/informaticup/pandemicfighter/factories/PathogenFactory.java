@@ -17,10 +17,10 @@ public class PathogenFactory {
 
         Pathogen pathogen = new Pathogen(
                 jsonPathogen.get(KEY_NAME).getAsString(),
-                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_INFECTIVITY).getAsString()),
-                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_MOBILITY).getAsString()),
-                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_DURATION).getAsString()),
-                ValueUtility.getValueEqualToString(jsonPathogen.get(KEY_LETHALITY).getAsString())
+                ValueUtility.getValueEqualToStringPathogen(jsonPathogen.get(KEY_INFECTIVITY).getAsString()),
+                ValueUtility.getValueEqualToStringPathogen(jsonPathogen.get(KEY_MOBILITY).getAsString()),
+                ValueUtility.getValueEqualToStringPathogen(jsonPathogen.get(KEY_DURATION).getAsString()),
+                ValueUtility.getValueEqualToStringPathogen(jsonPathogen.get(KEY_LETHALITY).getAsString())
         );
         return pathogen;
 
