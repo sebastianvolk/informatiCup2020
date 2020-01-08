@@ -6,6 +6,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.E
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.OutbreakEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.CityProvider;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ThreatEvaluator {
@@ -13,6 +14,7 @@ public class ThreatEvaluator {
     private static final double FACTOR_REACHABLE_CITY = 1.05;
     private static final double FACTOR_AIRPORT_REACHABLE_CITY_HAS_PATHOGEN = 1.05;
     private static final double FACTOR_MOBIL_REACHABLE_CITY_HAS_PATHOGEN = 1.05;
+    private static final double FACTOR_IMPACT_OF_PREVALENCE = 1;
 
     public double calculateForDevelopMedication(Pathogen pathogen) {
         double threat = 1;
@@ -27,7 +29,6 @@ public class ThreatEvaluator {
                         OutbreakEvent outbreakEvent = (OutbreakEvent) event;
                         if (pathogen.getName().equals(outbreakEvent.getPathogen().getName())) {
                             threat *= (FACTOR_OUTBREAK * ThreatIndicator.getCityThreatIndicator(city));
-                            System.out.println(threat);
                         }
                     }
                 }
@@ -108,7 +109,7 @@ public class ThreatEvaluator {
             return threat;
     }
 
-    public double calculateCloseAirportThreat(City city){
+    public double calculateCloseAirport(City city){
         double threat = 1;
         double cityThreat = ThreatIndicator.getCityThreatIndicator(city);
         //Wie geht unserer Stadt mit den vorhandenen Threats um
@@ -263,37 +264,92 @@ public class ThreatEvaluator {
         return threat;
     }
 
+    public double calculateExertInfluence(City city){
+        double threat = 1;
+        double economy = city.getEconomy();
+        threat *= randomlyChangeValueThreat(economy, false);;
+
+        return threat;
+    }
+
+    public double calculateCallElection(City city){
+        double threat = 1;
+        double government = city.getGovernment();
+        threat *= randomlyChangeValueThreat(government, false);
+
+        return threat;
+    }
+
+    public double calculateApplyHygienicMeasure(City city){
+        double threat = 1;
+        double cityHygiene = city.getHygiene();
+        threat *= randomlyChangeValueThreat(cityHygiene, true);
+
+        ArrayList<Event> events = city.getEvents();
+        if (events != null) {
+            double prevalence = 0;
+            ArrayList<Pathogen> pathogensInCity = city.getPathogensInCity();
+            for (Pathogen pathogenInCity : pathogensInCity) {
+                for (Event event : events) {
+                    if ("outbreak".equals(event.getType())) {
+                        OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+                        if (pathogenInCity.getName().equals(outbreakEvent.getPathogen().getName())) {
+                            prevalence += outbreakEvent.getPrevalence();
+                        }
+                    }
+                }
+            }
+            threat *= (FACTOR_IMPACT_OF_PREVALENCE * (1 - prevalence));
+        }
+
+        return threat;
+    }
+
+    public double calculateLaunchCampaign(City city){
+        double threat = 1;
+        double cityAwareness = city.getHygiene();
+        threat *= randomlyChangeValueThreat(cityAwareness, true);
+
+        return threat;
+    }
+
     public double calculateEndRound(){
         double threat = 1;
         //TODO: needs to be implemented
 
         return threat;
-
     }
 
-
-    public double calculateExertInfluence(){
+    private double randomlyChangeValueThreat(Double value, Boolean justIncrease){
         double threat = 1;
-        //TODO: needs to be implemented
+
+        if (value == 1.1){
+            threat *= 0;
+        }
+        else if (value == 1.05){
+            if (justIncrease){
+                threat *= 0.9;
+            }
+            else {
+                threat *= 0.25;
+            }
+        }
+        else if (value == 1){
+            if (justIncrease){
+                threat *= 1;
+            }
+            else {
+                threat *= 0.9;
+            }
+        }
+        else if (value == 0.95){
+            threat *= 1.05;
+        }
+        else if (value == 0.9){
+            threat *= 1.1;
+        }
 
         return threat;
-
-    }
-
-    public double calculateCallElection(){
-        double threat = 1;
-        //TODO: needs to be implemented
-
-        return threat;
-
-    }
-
-    public double calculateLunchCampaign(){
-        double threat = 1;
-        //TODO: needs to be implemented
-
-        return threat;
-
     }
 
     private double getPathogenCityThreat(double cityThreat, ArrayList<Double> pathogensThreat) {
