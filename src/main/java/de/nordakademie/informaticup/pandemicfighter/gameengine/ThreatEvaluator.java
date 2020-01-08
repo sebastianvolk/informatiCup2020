@@ -106,6 +106,71 @@ public class ThreatEvaluator {
             return threat;
     }
 
+    public double calculateCloseAirport(){
+        double threat = 1;
+            //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+
+    public double calculateCloseConnection(){
+        double threat = 1;
+        //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+
+    public double calculateCallElection(){
+        double threat = 1;
+        //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+
+    public double calculateDeployVaccine(){
+        double threat = 1;
+        //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+
+    public double calculateEndRound(){
+        double threat = 1;
+        //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+
+    public double calculateExertInfluence(){
+        double threat = 1;
+        //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+    public double calculateLunchCampaign(){
+        double threat = 1;
+        //TODO: needs to be implemented
+
+        return threat;
+
+    }
+
+
+
+
+
     private double getPathogenCityThreat(double cityThreat, ArrayList<Double> pathogensThreat) {
         double threat = 1;
         for (double pathogenThreat : pathogensThreat) {
