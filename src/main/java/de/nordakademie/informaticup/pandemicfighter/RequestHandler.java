@@ -39,7 +39,6 @@ public class RequestHandler implements HttpHandler {
             Game game = gameFactory.createGame(jsonRequestObject);
 
             String response = new GameExecutor(game)
-                    .playRound()
                     .getAction()
                     .toString();
 

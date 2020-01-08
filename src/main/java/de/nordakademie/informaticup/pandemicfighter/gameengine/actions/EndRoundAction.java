@@ -15,7 +15,7 @@ public class EndRoundAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return 0.8;
+        return 0.4;
     }
 
     @Override
