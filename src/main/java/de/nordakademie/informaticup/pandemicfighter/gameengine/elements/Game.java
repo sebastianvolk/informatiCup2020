@@ -1,16 +1,12 @@
-package de.nordakademie.informaticup.pandemicfighter.gameengine;
-
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game extends ObjectWithEvents {
     private String outcome;
     private int round;
     private int points;
     private ArrayList<City> cities;
-    private ArrayList<Event> events;
 
     public String getOutcome() {
         return outcome;
@@ -42,13 +38,5 @@ public class Game {
 
     public void setCities(ArrayList<City> cities) {
         this.cities = cities;
-    }
-
-    public ArrayList<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(ArrayList<Event> events) {
-        this.events = events;
     }
 }

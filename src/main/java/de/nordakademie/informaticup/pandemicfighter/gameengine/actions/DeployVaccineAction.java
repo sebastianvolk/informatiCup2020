@@ -23,7 +23,7 @@ public class DeployVaccineAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return new ThreatEvaluator().calculateForDeployVaccin(city, pathogen);
+        return new ThreatEvaluator().calculateDeployVaccine(city, pathogen);
     }
 
     @Override

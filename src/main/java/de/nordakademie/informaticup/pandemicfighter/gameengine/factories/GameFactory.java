@@ -1,10 +1,10 @@
-package de.nordakademie.informaticup.pandemicfighter.factories;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.factories;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.nordakademie.informaticup.pandemicfighter.IGameFactory;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Game;
 
 import java.util.ArrayList;
 import java.util.Map;
