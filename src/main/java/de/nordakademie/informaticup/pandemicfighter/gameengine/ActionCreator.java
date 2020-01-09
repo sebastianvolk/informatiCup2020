@@ -7,6 +7,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.ConnectionClosedEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.PathogenEncounteredEvent;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.VaccineDeployedEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.CityProvider;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.MedicationCabinet;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.VaccineCabinet;
@@ -124,9 +125,19 @@ public class ActionCreator {
         for (Pathogen pathogen : pathogens) {
             if (0 == VaccineCabinet.roundsUntilVaccineIsAvailable(pathogen.getName())) {
                 for (City city : cities) {
-                    DeployVaccineAction action = new DeployVaccineAction(pathogen, city);
-                    if (isActionPossible(action)) {
-                        actions.add(action);
+                    ArrayList<Event> deployVaccineEvents = city.getEventsByType("vaccineDeployed");
+                    boolean alreadyDeployed = false;
+                    for (Event event : deployVaccineEvents) {
+                        VaccineDeployedEvent vaccineDeployedEvent = (VaccineDeployedEvent) event;
+                        if (pathogen.getName().equals(vaccineDeployedEvent.getPathogen())) {
+                            alreadyDeployed = true;
+                        }
+                    }
+                    if (!alreadyDeployed) {
+                        DeployVaccineAction action = new DeployVaccineAction(pathogen, city);
+                        if (isActionPossible(action)) {
+                            actions.add(action);
+                        }
                     }
                 }
             }

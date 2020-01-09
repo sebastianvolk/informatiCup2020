@@ -101,7 +101,17 @@ class EventFactory {
             event = new CampaignLaunchedEvent(
                     jsonEvent.get(KEY_ROUND).getAsInt()
             );
-        } else {
+        } else if ("medicationDeployed".equals(eventType)) {
+            event = new MedicationDeployedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt()
+            );
+        }else if ("vaccineDeployed".equals(eventType)) {
+            Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
+            event = new VaccineDeployedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt(),
+                    pathogen
+            );
+        }else {
             System.out.println("New event type found!");
             System.out.println(jsonEvent.toString());
         }
