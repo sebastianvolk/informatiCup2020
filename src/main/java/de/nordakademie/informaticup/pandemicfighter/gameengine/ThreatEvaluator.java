@@ -82,10 +82,17 @@ public class ThreatEvaluator {
         double cityThreat = ThreatIndicator.getCityThreatIndicator(city);
         ArrayList<Double> pathogensThreat = new ArrayList<>();
         ArrayList<Pathogen> pathogens = city.getPathogensInCity();
-        ArrayList<Event> events = city.getEvents();
-        if (pathogens != null) {
+        ArrayList<Event> events = city.getEventsByType("outbreak");
+        double prevalence = 0;
+        if (!pathogens.isEmpty()) {
             inDanger = true;
             for (Pathogen pathogen : pathogens) {
+                for (Event event : events){
+                    OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+                    if (outbreakEvent.getPathogen().getName().equals(pathogen.getName())){
+                        prevalence += outbreakEvent.getPrevalence();
+                    }
+                }
                 double pathogenThreat = ThreatIndicator.getPathogenThreatIndicator(pathogen);
                 pathogensThreat.add(pathogenThreat);
             }
@@ -108,6 +115,7 @@ public class ThreatEvaluator {
         }
         if (!pathogensThreat.isEmpty()) {
             threat *= getPathogenCityThreat(cityThreat, pathogensThreat);
+            threat *= 1 + (FACTOR_IMPACT_OF_PREVALENCE * prevalence);
         }
         if (affectedCityCounter > affectedCities.size() / 2) {
             threat *= FACTOR_TOO_MANY_REACHABLE_CITIES_ALREADY_INFECTED;
@@ -312,23 +320,23 @@ public class ThreatEvaluator {
 
     private double randomlyChangeValueThreat(Double value, Boolean justIncrease) {
         double threat = 1;
-        if (value == 1.1) {//TODO: get from ValueUtility
+        if (value == ValueUtility.getVeryHighValueCity()) {
             threat *= 0;
-        } else if (value == 1.05) {
+        } else if (value == ValueUtility.getHighValueCity()) {
             if (justIncrease) {
                 threat *= 0.9;
             } else {
                 threat *= 0.25;
             }
-        } else if (value == 1) {
+        } else if (value == ValueUtility.getMidValue()) {
             if (justIncrease) {
                 threat *= 1;
             } else {
                 threat *= 0.9;
             }
-        } else if (value == 0.95) {
+        } else if (value == ValueUtility.getLowValueCity()) {
             threat *= 1.05;
-        } else if (value == 0.9) {
+        } else if (value == ValueUtility.getVeryLowValueCity()) {
             threat *= 1.1;
         }
         return threat;
