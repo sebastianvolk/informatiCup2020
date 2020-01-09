@@ -35,10 +35,17 @@ If you just want to execute the program you can download the jar file from our [
 To start the server you need to execute the compiled program. For this it is necessary that the Java Runtime Environment is installed.
 
 ```sh
-java -jar pandemicfighter-<version>.jar
+java -jar pandemicfighter-<version>-jar-with-dependencies.jar
 ```
 
 The variable `<version>` stands for the current version.
+
+Please check the command line output and wait until you see the following success message before starting the game using the [command line tool](https://github.com/informatiCup/informatiCup2020/releases/latest).
+
+```
+Server started on port 50123
+Quit the server with CONTROL-C
+```
 
 ## Team BurningTrain
 
