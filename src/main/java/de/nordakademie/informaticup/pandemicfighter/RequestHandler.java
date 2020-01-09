@@ -55,7 +55,7 @@ public class RequestHandler implements HttpHandler {
     }
 
     private String convertStreamToString(InputStream is) {
-        Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        Scanner s = new java.util.Scanner(is, "UTF-8").useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
 }
