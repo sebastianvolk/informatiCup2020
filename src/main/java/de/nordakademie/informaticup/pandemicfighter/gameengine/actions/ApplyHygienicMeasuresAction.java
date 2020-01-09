@@ -20,7 +20,7 @@ public class ApplyHygienicMeasuresAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return new ThreatEvaluator().calculateApplyHygienicMeasure(city);
+        return new ThreatEvaluator().calculateApplyHygienicMeasures(city);
     }
 
     @Override

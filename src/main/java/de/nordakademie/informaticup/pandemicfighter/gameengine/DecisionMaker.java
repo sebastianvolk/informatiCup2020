@@ -5,7 +5,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.actions.Action;
 import java.util.ArrayList;
 
 public class DecisionMaker {
-    private static final double FACTOR_POINT = 1.05;
+    private static final double FACTOR_POINT = 1.04;
 
     public Action getBestAction(ArrayList<Action> actions) {
         Action bestAction = actions.get(0);

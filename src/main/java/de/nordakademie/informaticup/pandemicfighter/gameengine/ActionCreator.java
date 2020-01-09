@@ -2,9 +2,13 @@ package de.nordakademie.informaticup.pandemicfighter.gameengine;
 
 import de.nordakademie.informaticup.pandemicfighter.gameengine.actions.*;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Game;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.ConnectionClosedEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.PathogenEncounteredEvent;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.VaccineDeployedEvent;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.CityProvider;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.MedicationCabinet;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.VaccineCabinet;
 
@@ -14,8 +18,8 @@ public class ActionCreator {
     private int availablePoints;
     public ArrayList<Action> getAllPossibleActions(Game game) {
         availablePoints = game.getPoints();
-        ArrayList<City> cities = game.getCities();
-        ArrayList<Pathogen> pathogens = getPathogensFromEvents(game.getEvents());
+        ArrayList<City> cities = CityProvider.getCities();
+        ArrayList<Pathogen> pathogens = getPathogensFromPathogenEncounteredEvents(game.getEventsByType("pathogenEncountered"));
         ArrayList<Action> actions = new ArrayList<>();
         actions.add(new EndRoundAction());
         actions.addAll(getAllPossiblePutUnderQuarantineActions(cities));
@@ -35,15 +39,18 @@ public class ActionCreator {
     private ArrayList<Action> getAllPossiblePutUnderQuarantineActions(ArrayList<City> cities){
         ArrayList<Action> actions = new ArrayList<>();
         for (City city : cities) {
-            int rounds = 1;
-            boolean inserted = true;
-            while (inserted) {
-                PutUnderQuarantineAction action = new PutUnderQuarantineAction(city, rounds);
-                inserted = isActionPossible(action);
-                if (inserted) {
-                    actions.add(action);
+            ArrayList<Event> quarantineEvents = city.getEventsByType("quarantine");
+            if (quarantineEvents.size() == 0) {
+                int rounds = 1;
+                boolean inserted = true;
+                while (inserted) {
+                    PutUnderQuarantineAction action = new PutUnderQuarantineAction(city, rounds);
+                    inserted = isActionPossible(action);
+                    if (inserted) {
+                        actions.add(action);
+                    }
+                    rounds++;
                 }
-                rounds ++;
             }
         }
         return actions;
@@ -52,15 +59,18 @@ public class ActionCreator {
     private ArrayList<Action> getAllPossibleCloseAirportActions(ArrayList<City> cities){
         ArrayList<Action> actions = new ArrayList<>();
         for (City city : cities) {
-            int rounds = 1;
-            boolean inserted = true;
-            while (inserted) {
-                CloseAirportAction action = new CloseAirportAction(city, rounds);
-                inserted = isActionPossible(action);
-                if (inserted) {
-                    actions.add(action);
+            ArrayList<Event> airportClosedEvents = city.getEventsByType("airportClosed");
+            if (airportClosedEvents.size() == 0) {
+                int rounds = 1;
+                boolean inserted = true;
+                while (inserted) {
+                    CloseAirportAction action = new CloseAirportAction(city, rounds);
+                    inserted = isActionPossible(action);
+                    if (inserted) {
+                        actions.add(action);
+                    }
+                    rounds++;
                 }
-                rounds ++;
             }
         }
         return actions;
@@ -71,16 +81,26 @@ public class ActionCreator {
         for (City fromCity : cities) {
             ArrayList<City> toCities = new ArrayList<>(cities);
             toCities.remove(fromCity);
+            ArrayList<Event> connectionClosedEvents = fromCity.getEventsByType("connectionClosed");
             for (City toCity : toCities) {
-                int rounds = 1;
-                boolean inserted = true;
-                while (inserted) {
-                    CloseConnectionAction action = new CloseConnectionAction(fromCity, toCity, rounds);
-                    inserted = isActionPossible(action);
-                    if (inserted) {
-                        actions.add(action);
+                boolean connectionClosed = false;
+                for (Event event : connectionClosedEvents) {
+                    ConnectionClosedEvent connectionClosedEvent = (ConnectionClosedEvent) event;
+                    if (toCity.getName().equals(connectionClosedEvent.getCity())) {
+                        connectionClosed = true;
                     }
-                    rounds++;
+                }
+                if (!connectionClosed) {
+                    int rounds = 1;
+                    boolean inserted = true;
+                    while (inserted) {
+                        CloseConnectionAction action = new CloseConnectionAction(fromCity, toCity, rounds);
+                        inserted = isActionPossible(action);
+                        if (inserted) {
+                            actions.add(action);
+                        }
+                        rounds++;
+                    }
                 }
             }
         }
@@ -105,9 +125,19 @@ public class ActionCreator {
         for (Pathogen pathogen : pathogens) {
             if (0 == VaccineCabinet.roundsUntilVaccineIsAvailable(pathogen.getName())) {
                 for (City city : cities) {
-                    DeployVaccineAction action = new DeployVaccineAction(pathogen, city);
-                    if (isActionPossible(action)) {
-                        actions.add(action);
+                    ArrayList<Event> deployVaccineEvents = city.getEventsByType("vaccineDeployed");
+                    boolean alreadyDeployed = false;
+                    for (Event event : deployVaccineEvents) {
+                        VaccineDeployedEvent vaccineDeployedEvent = (VaccineDeployedEvent) event;
+                        if (pathogen.getName().equals(vaccineDeployedEvent.getPathogen())) {
+                            alreadyDeployed = true;
+                        }
+                    }
+                    if (!alreadyDeployed) {
+                        DeployVaccineAction action = new DeployVaccineAction(pathogen, city);
+                        if (isActionPossible(action)) {
+                            actions.add(action);
+                        }
                     }
                 }
             }
@@ -191,13 +221,11 @@ public class ActionCreator {
         return availablePoints >= action.getPoints();
     }
 
-    private ArrayList<Pathogen> getPathogensFromEvents(ArrayList<Event> events) {
+    private ArrayList<Pathogen> getPathogensFromPathogenEncounteredEvents(ArrayList<Event> events) {
         ArrayList<Pathogen> pathogens = new ArrayList<>();
         for (Event event : events) {
-            if ("pathogenEncountered".equals(event.getType())) {
-                PathogenEncounteredEvent pathogenEncounteredEvent = (PathogenEncounteredEvent) event;
-                pathogens.add(pathogenEncounteredEvent.getPathogen());
-            }
+            PathogenEncounteredEvent pathogenEncounteredEvent = (PathogenEncounteredEvent) event;
+            pathogens.add(pathogenEncounteredEvent.getPathogen());
         }
         return pathogens;
     }

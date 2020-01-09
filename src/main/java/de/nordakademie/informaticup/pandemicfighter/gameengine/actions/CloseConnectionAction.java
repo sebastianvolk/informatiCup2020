@@ -24,7 +24,7 @@ public class CloseConnectionAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return new ThreatEvaluator().calculateForCloseConnection(fromCity, toCity);
+        return new ThreatEvaluator().calculateCloseConnection(fromCity, toCity);
     }
 
     @Override

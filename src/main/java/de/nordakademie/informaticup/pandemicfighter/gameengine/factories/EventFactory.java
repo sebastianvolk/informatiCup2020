@@ -1,4 +1,4 @@
-package de.nordakademie.informaticup.pandemicfighter.factories;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.factories;
 
 import com.google.gson.JsonObject;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
@@ -12,6 +12,7 @@ class EventFactory {
     private static final String KEY_UNTIL_ROUND = "untilRound";
     private static final String KEY_ROUND = "round";
     private static final String KEY_PARTICIPANTS = "participants";
+    private static final String KEY_CITY = "city";
 
     Event createEvent(JsonObject jsonEvent) {
         Event event = null;
@@ -68,7 +69,49 @@ class EventFactory {
                     pathogen,
                     jsonEvent.get(KEY_SINCE_ROUND).getAsInt()
             );
-        } else {
+        } else if ("airportClosed".equals(eventType)) {
+            event = new AirportClosedEvent(
+                    jsonEvent.get(KEY_SINCE_ROUND).getAsInt(),
+                    jsonEvent.get(KEY_UNTIL_ROUND).getAsInt()
+            );
+        } else if ("connectionClosed".equals(eventType)) {
+            event = new ConnectionClosedEvent(
+                    jsonEvent.get(KEY_CITY).getAsString(),
+                    jsonEvent.get(KEY_SINCE_ROUND).getAsInt(),
+                    jsonEvent.get(KEY_UNTIL_ROUND).getAsInt()
+            );
+        } else if ("influenceExerted".equals(eventType)) {
+            event = new InfluenceExertedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt()
+            );
+        } else if ("electionsCalled".equals(eventType)) {
+            event = new ElectionsCalledEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt()
+            );
+        } else if ("hygienicMeasuresApplied".equals(eventType)) {
+            event = new HygienicMeasuresAppliedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt()
+            );
+        } else if ("quarantine".equals(eventType)) {
+            event = new QuarantineEvent(
+                    jsonEvent.get(KEY_SINCE_ROUND).getAsInt(),
+                    jsonEvent.get(KEY_UNTIL_ROUND).getAsInt()
+            );
+        } else if ("campaignLaunched".equals(eventType)) {
+            event = new CampaignLaunchedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt()
+            );
+        } else if ("medicationDeployed".equals(eventType)) {
+            event = new MedicationDeployedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt()
+            );
+        }else if ("vaccineDeployed".equals(eventType)) {
+            Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
+            event = new VaccineDeployedEvent(
+                    jsonEvent.get(KEY_ROUND).getAsInt(),
+                    pathogen
+            );
+        }else {
             System.out.println("New event type found!");
             System.out.println(jsonEvent.toString());
         }

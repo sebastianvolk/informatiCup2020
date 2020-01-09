@@ -22,7 +22,7 @@ public class PutUnderQuarantineAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return new ThreatEvaluator().calculateForPutUnderQurantine(city);
+        return new ThreatEvaluator().calculatePutUnderQuarantine(city);
     }
 
     @Override

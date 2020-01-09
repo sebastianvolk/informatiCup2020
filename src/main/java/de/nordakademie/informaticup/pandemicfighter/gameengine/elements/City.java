@@ -5,13 +5,12 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.O
 
 import java.util.ArrayList;
 
-public class City {
+public class City extends ObjectWithEvents {
     private String name;
     private double latitude;
     private double longitude;
     private int population;
     private ArrayList<String> connections;
-    private ArrayList<Event> events;
     private double economy;
     private double government;
     private double hygiene;
@@ -26,10 +25,6 @@ public class City {
 
     public void setPopulation(int population) {
         this.population = population;
-    }
-
-    public void setEvents(ArrayList<Event> events) {
-        this.events = events;
     }
 
     public void setEconomy(double economy) {
@@ -68,10 +63,6 @@ public class City {
         return connections;
     }
 
-    public ArrayList<Event> getEvents() {
-        return events;
-    }
-
     public double getEconomy() {
         return economy;
     }
@@ -90,31 +81,24 @@ public class City {
 
     public ArrayList<Pathogen> getPathogensInCity() {
         ArrayList<Pathogen> pathogens = new ArrayList<>();
-        if (this.events != null) {
-            for (Event event : this.events) {
-                if ("outbreak".equals(event.getType())) {
-                    OutbreakEvent outbreakEvent = (OutbreakEvent) event;
-                    Pathogen pathogen = outbreakEvent.getPathogen();
-                    pathogens.add(pathogen);
-                }
-            }
+        ArrayList<Event> outbreakEvents = getEventsByType("outbreak");
+        for (Event event : outbreakEvents) {
+            OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+            Pathogen pathogen = outbreakEvent.getPathogen();
+            pathogens.add(pathogen);
         }
         return pathogens;
     }
 
     public boolean hasCityPathogenOutbreak(Pathogen pathogen) {
         boolean result = false;
-        if (this.events != null) {
-            for (Event event : this.events) {
-                if ("outbreak".equals(event.getType())) {
-                    OutbreakEvent outbreakEvent = (OutbreakEvent) event;
-                    if (pathogen == outbreakEvent.getPathogen()) {
-                        result = true;
-                    }
-                }
+        ArrayList<Event> outbreakEvents = getEventsByType("outbreak");
+        for (Event event : outbreakEvents) {
+            OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+            if (pathogen.getName().equals(outbreakEvent.getPathogen().getName())) {
+                result = true;
             }
         }
         return result;
     }
-
 }

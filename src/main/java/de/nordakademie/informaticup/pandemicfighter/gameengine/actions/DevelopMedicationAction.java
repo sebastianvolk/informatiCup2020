@@ -20,7 +20,7 @@ public class DevelopMedicationAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return new ThreatEvaluator().calculateForDevelopMedication(pathogen);
+        return new ThreatEvaluator().calculateDevelopMedication(pathogen);
     }
 
     @Override

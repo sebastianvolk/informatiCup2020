@@ -1,6 +1,6 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets;
 
-import de.nordakademie.informaticup.pandemicfighter.gameengine.Game;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Game;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.MedicationAvailableEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.MedicationInDevelopmentEvent;

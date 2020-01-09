@@ -1,4 +1,4 @@
-package de.nordakademie.informaticup.pandemicfighter.factories;
+package de.nordakademie.informaticup.pandemicfighter.gameengine.factories;
 
 import com.google.gson.JsonObject;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.ValueUtility;
