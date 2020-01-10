@@ -15,8 +15,10 @@ public class ThreatEvaluator {
     private static final double FACTOR_NEAR_CITY_HAS_PATHOGEN = 1.03;
     private static final double FACTOR_IMPACT_OF_PREVALENCE = 0.1;
     private static final double FACTOR_TOO_MANY_REACHABLE_CITIES_ALREADY_INFECTED = 0.9;
+    private static final double PERCENTAGE_INFECTED_WORLD_POPULATION = 0.3;
+    private static final double FACTOR_TOO_MANY_INFECTED = 1.2;
 
-    private static final double FACTOR_END_ROUND = 0.1;
+    private static final double FACTOR_END_ROUND = 0.8;
 
     private static final double FACTOR_DEVELOP_MEDICATION = 1;
     private static final double FACTOR_DEPLOY_MEDICATION = 1;
@@ -315,7 +317,26 @@ public class ThreatEvaluator {
     }
 
     public double calculateEndRound() {
-        return FACTOR_END_ROUND;
+        double threat = FACTOR_END_ROUND;
+        double worldPopulation = 0;
+        double worldwideInfected = 0;
+        ArrayList<City> cities = CityProvider.getCities();
+        for (City city : cities) {
+            worldPopulation += city.getPopulation();
+            double prevalence = 0;
+            ArrayList<Event> events = city.getEventsByType("outbreak");
+            for (Event event : events) {
+                OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+                prevalence += outbreakEvent.getPrevalence();
+            }
+            worldwideInfected += (prevalence * city.getPopulation());
+        }
+
+        if (worldwideInfected > (worldPopulation * PERCENTAGE_INFECTED_WORLD_POPULATION)){
+            threat *= FACTOR_TOO_MANY_INFECTED;
+        }
+
+        return threat;
     }
 
     private double randomlyChangeValueThreat(Double value, Boolean justIncrease) {
