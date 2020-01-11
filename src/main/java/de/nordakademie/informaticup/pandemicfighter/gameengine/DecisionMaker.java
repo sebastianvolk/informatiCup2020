@@ -5,7 +5,12 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.actions.Action;
 import java.util.ArrayList;
 
 public class DecisionMaker {
-    private static final double FACTOR_POINT = 1.04;
+    private static final double FACTOR_POINT = 1.17;
+    private int points;
+
+    public DecisionMaker(int points) {
+        this.points = points;
+    }
 
     public Action getBestAction(ArrayList<Action> actions) {
         Action bestAction = actions.get(0);
@@ -21,10 +26,15 @@ public class DecisionMaker {
         double action2ThreatIndicator = action2.getThreatIndicator();
         if (action1.getPoints() < action2.getPoints()) {
             int pointDifference = action2.getPoints() - action1.getPoints();
-            action1ThreatIndicator *= Math.pow(FACTOR_POINT, pointDifference);
+            /*double factorAvailablePoints = action1.getPoints () != 0 ? (double) action1.getPoints() / points : 0.77;*/
+            double factorAvailablePoints = (double) (action1.getPoints() + 5) / points;
+            factorAvailablePoints = factorAvailablePoints > 1 ? 1 : factorAvailablePoints;
+            action1ThreatIndicator *= Math.pow(FACTOR_POINT, pointDifference) * factorAvailablePoints;
         } else if (action1.getPoints() > action2.getPoints()) {
             int pointDifference = action1.getPoints() - action2.getPoints();
-            action2ThreatIndicator *= Math.pow(FACTOR_POINT, pointDifference);
+            double factorAvailablePoints = (double) (action2.getPoints() + 5) / points;
+            factorAvailablePoints = factorAvailablePoints > 1 ? 1 : factorAvailablePoints;
+            action2ThreatIndicator *= Math.pow(FACTOR_POINT, pointDifference) * factorAvailablePoints;
         }
         if (action1ThreatIndicator >= action2ThreatIndicator) {
             betterAction = action1;
