@@ -5,6 +5,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.actions.Action;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.actions.EndRoundAction;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Game;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.CityProvider;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.GameProvider;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.MedicationCabinet;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets.VaccineCabinet;
 
@@ -28,6 +29,7 @@ public class GameExecutor {
     }
 
     private void initializeProvider() {
+        GameProvider.initialize(game);
         CityProvider.setCities(game.getCities());
         MedicationCabinet.initialize(game);
         VaccineCabinet.initialize(game);

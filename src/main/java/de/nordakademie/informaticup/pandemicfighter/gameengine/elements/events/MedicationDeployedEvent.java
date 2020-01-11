@@ -6,8 +6,9 @@ public class MedicationDeployedEvent extends Event{
     private Pathogen pathogen;
     private int round;
 
-    public MedicationDeployedEvent(int round) {
+    public MedicationDeployedEvent(Pathogen pathogen, int round) {
         super("medicationDeployed");
+        this.pathogen = pathogen;
         this.round = round;
     }
 

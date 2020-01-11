@@ -3,55 +3,70 @@ package de.nordakademie.informaticup.pandemicfighter.gameengine;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.Event;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.MedicationDeployedEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.OutbreakEvent;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.CityProvider;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class ThreatEvaluator {
-    private static final double FACTOR_OUTBREAK = 1.05;
-    private static final double FACTOR_REACHABLE_CITY = 1.02;
+    private static final double FACTOR_OUTBREAK = 1.5;
+    private static final double FACTOR_REACHABLE_CITY = 1.2;
     private static final double FACTOR_AIRPORT_REACHABLE_CITY = 1.02;
-    private static final double FACTOR_NEAR_CITY_HAS_PATHOGEN = 1.01;
-    private static final double FACTOR_IMPACT_OF_PREVALENCE = 1.1;
-    private static final double FACTOR_TOO_MANY_REACHABLE_CITIES_ALREADY_INFECTED = 0.95;
+    private static final double FACTOR_NEAR_CITY_HAS_PATHOGEN = 1.1;
+    private static final double FACTOR_IMPACT_OF_PREVALENCE = 1.3;
+    private static final double FACTOR_TOO_MANY_REACHABLE_CITIES_ALREADY_INFECTED = 0.8;
+    private static final double FACTOR_MEDICATION_ALREADY_DEPLOYED = 0.6;
 
-    private static final double THREAT_THRESHOLD = 14;
-    private static final double FACTOR_BOOST_ROUND_THREAT = 1.5;
+    private static final double THREAT_THRESHOLD = 3;
+    private static final double FACTOR_BOOST_ROUND_THREAT = 1.05;
 
     private static final double PERCENTAGE_INFECTED_WORLD_POPULATION = 0.3;
-    private static final double FACTOR_TOO_MANY_INFECTED = 2;
-    private static final double FACTOR_END_ROUND = 2.5;
+    private static final double FACTOR_TOO_MANY_INFECTED = 1.5;
+    private static final double FACTOR_END_ROUND = 1.5;
     //private static final double FACTOR_END_ROUND = 3; DA HAT ER GESPART
 
-    private static final double FACTOR_DEVELOP_MEDICATION = 10;
-    private static final double FACTOR_DEPLOY_MEDICATION = 0.9;
-    private static final double FACTOR_PUT_UNDER_QUARANTINE = 5;
-    private static final double FACTOR_CLOSE_AIRPORT = 0.95;
-    private static final double FACTOR_CLOSE_CONNECTION = 0.9;
-    private static final double FACTOR_DEVELOP_VACCINE = 250;
-    private static final double FACTOR_DEPLOY_VACCINE = 0.8;
-    private static final double FACTOR_EXERT_INFLUENCE = 1.5;
-    private static final double FACTOR_CALL_ELECTION = 1.5;
+    private static final double FACTOR_DEVELOP_MEDICATION = 1.1;
+    private static final double FACTOR_DEPLOY_MEDICATION = 1;
+    private static final double FACTOR_PUT_UNDER_QUARANTINE = 1;
+    private static final double FACTOR_CLOSE_AIRPORT = 1;
+    private static final double FACTOR_CLOSE_CONNECTION = 0.8;
+    private static final double FACTOR_DEVELOP_VACCINE = 1.1;
+    private static final double FACTOR_DEPLOY_VACCINE = 1;
+    private static final double FACTOR_EXERT_INFLUENCE = 1;
+    private static final double FACTOR_CALL_ELECTION = 1;
     private static final double FACTOR_APPLY_HYGIENIC_MEASURES = 0.8;
-    private static final double FACTOR_LAUNCH_CAMPAIGN = 1.5;
+    private static final double FACTOR_LAUNCH_CAMPAIGN = 1;
 
     public double calculateDevelopMedication(Pathogen pathogen) {
         double threat = 1;
         double pathogenThreat = ThreatIndicator.getPathogenThreatIndicator(pathogen);
         threat *= pathogenThreat;
         ArrayList<City> cities = CityProvider.getCities();
+        int cityWithPathogenOutbreakCount = 0;
+        double averageCityThreat = 0;
         for (City city : cities) {
             ArrayList<Event> events = city.getEventsByType("outbreak");
             for (Event event : events) {
                 OutbreakEvent outbreakEvent = (OutbreakEvent) event;
                 if (pathogen.getName().equals(outbreakEvent.getPathogen().getName())) {
-                    threat *= (FACTOR_OUTBREAK * ThreatIndicator.getCityThreatIndicator(city));
+                    averageCityThreat += ThreatIndicator.getCityThreatIndicator(city);
+                    cityWithPathogenOutbreakCount++;
                 }
             }
         }
-        return threat * FACTOR_DEVELOP_MEDICATION;
+        averageCityThreat = average(averageCityThreat, cityWithPathogenOutbreakCount);
+        threat *= averageCityThreat * FACTOR_DEVELOP_MEDICATION;
+        //System.out.println(threat + " calculateDevelopMedication");
+        return threat;
+    }
+
+    private double average(double threat, int count) {
+        double average = 1;
+        if (count > 0) {
+            average = threat / count;
+        }
+        return average;
     }
 
     public double calculateDeployMedication(City city, Pathogen pathogen) {
@@ -66,6 +81,13 @@ public class ThreatEvaluator {
         else {
             for (Event event : events) {
                 OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+                ArrayList<Event> medicationDeployedEvents = city.getEventsByType("medicationDeployed");
+                for (Event medicationEvent : medicationDeployedEvents) {
+                    MedicationDeployedEvent medicationDeployedEvent = (MedicationDeployedEvent) medicationEvent;
+                    if (medicationDeployedEvent.getPathogen().getName().equals(pathogen.getName())) {
+                        threat *= FACTOR_MEDICATION_ALREADY_DEPLOYED;
+                    }
+                }
                 if (pathogen.getName().equals(outbreakEvent.getPathogen().getName())) {
                     double prevalenceThreat = 0;
                     //TODO prevalenceThreat might be too high that way
@@ -77,7 +99,7 @@ public class ThreatEvaluator {
                     threat = 0;
                 }
             }
-            //TODO: Split apart nearCities multiplicate with pathogens mobility
+            /*//TODO: Split apart nearCities multiplicate with pathogens mobility
             ArrayList<City> nearCities = CityProvider.getNearCities(city);
             ArrayList<City> connectedCities = CityProvider.getConnectedCities(city);
             ArrayList<City> affectedCities;
@@ -89,9 +111,12 @@ public class ThreatEvaluator {
                         threat *= FACTOR_REACHABLE_CITY * (pathogenThreat * affectedCityThreat);
                     }
                 }
-            }
+            }*/
+
         }
-        return threat * FACTOR_DEPLOY_MEDICATION;
+        threat *= FACTOR_DEPLOY_MEDICATION;
+        //System.out.println(threat + " calculateDeployMedication");
+        return threat;
     }
 
     public double calculatePutUnderQuarantine(City city, int rounds) {
@@ -140,18 +165,21 @@ public class ThreatEvaluator {
         }
         if (!inDanger) threat = 0;
         threat = getThreatBoostedByRounds(threat, rounds);
-        return threat * FACTOR_PUT_UNDER_QUARANTINE;
+        threat *= FACTOR_PUT_UNDER_QUARANTINE;
+        //System.out.println(threat + " calculatePutUnderQuarantine");
+        return threat;
     }
 
     public double calculateCloseAirport(City city, int rounds) {
-        boolean inDanger = false;
+        boolean cityIsInfected = false;
         double threat = 1;
         double cityThreat = ThreatIndicator.getCityThreatIndicator(city);
         //Wie geht unserer Stadt mit den vorhandenen Threats um
         ArrayList<Pathogen> pathogensInCity = city.getPathogensInCity();
         if (!pathogensInCity.isEmpty()) {
-            inDanger = true;
-            threat *= getArrayListOfThreats(pathogensInCity, city);
+            cityIsInfected = true;
+            double arrayListTreat = getArrayListOfThreats(pathogensInCity, city);
+            threat *= arrayListTreat;
             /*ArrayList<Double> pathogensThreat = new ArrayList<>();
             for (Pathogen pathogenInCity : pathogensInCity) {
                 pathogensThreat.add(ThreatIndicator.getPathogenThreatIndicator(pathogenInCity));
@@ -162,32 +190,52 @@ public class ThreatEvaluator {
         //ArrayList<City> nearCities = CityProvider.getNearCities(city);
         ArrayList<City> connectedCities = CityProvider.getConnectedCities(city);
         //ArrayList<City> reachableCities = mergeArrayListOfCityAndRemoveDuplicates(nearCities, connectedCities);
+        double connectedCitiesThreat = 1;
+        int connectedCityCounter = 0;
         for (City connectedCity : connectedCities) {
             for (Pathogen pathogenInCity : pathogensInCity) {
                 if (!connectedCity.hasCityPathogenOutbreak(pathogenInCity)) {
                     double connectedCityThreat = ThreatIndicator.getCityThreatIndicator(connectedCity);
                     double pathogenInCityThreat = ThreatIndicator.getPathogenThreatIndicator(pathogenInCity);
-                    threat *= (FACTOR_AIRPORT_REACHABLE_CITY * (connectedCityThreat * pathogenInCityThreat));
+                    connectedCitiesThreat += FACTOR_AIRPORT_REACHABLE_CITY * (connectedCityThreat * pathogenInCityThreat);
+                    connectedCityCounter++;
                 }
             }
         }
+        if (connectedCityCounter != 0) {
+            threat *= (connectedCitiesThreat / connectedCityCounter);
+        }
         //Wie schlimm wäre es, wenn ein Pathogen von einer anderen Stadt in unsere kommt
         ArrayList<City> citiesWithConnectionToCurrentCity = CityProvider.getCitiesWhichHaveConnectionToGivenCity(city);
+        double connectedCityThreat = 1;
+        int connectedCityIncomingCounter = 0;
         for (City cityWithConnectionToCurrentCity : citiesWithConnectionToCurrentCity) {
             ArrayList<Pathogen> pathogensInCityWithConnection = cityWithConnectionToCurrentCity.getPathogensInCity();
             if (!pathogensInCityWithConnection.isEmpty()) {
                 for (Pathogen pathogenInCityWithConnection : pathogensInCityWithConnection) {
                     if (!city.hasCityPathogenOutbreak(pathogenInCityWithConnection)) {
-                        inDanger = true;
+                        cityIsInfected = true;
                         double pathogenThreat = ThreatIndicator.getPathogenThreatIndicator(pathogenInCityWithConnection);
-                        threat *= (FACTOR_AIRPORT_REACHABLE_CITY * (pathogenThreat * cityThreat));
+                        connectedCityThreat += FACTOR_AIRPORT_REACHABLE_CITY * (pathogenThreat * cityThreat);
+                        connectedCityIncomingCounter++;
                     }
                 }
             }
+        }/*
+        double test = 1;
+        if (connectedCityThreat * connectedCityThreat > 500) {
+            test += 0.5;
+        } else if (connectedCityThreat * connectedCityThreat > 1000) {
+            test += 0.75;
+        }*/
+        if (connectedCityIncomingCounter != 0) {
+            threat *= (connectedCityThreat / connectedCityIncomingCounter);
         }
-        if (!inDanger) threat = 0;
+        if (!cityIsInfected) threat = 0;
         threat = getThreatBoostedByRounds(threat, rounds);
-        return threat * FACTOR_CLOSE_AIRPORT;
+        threat = threat * FACTOR_CLOSE_AIRPORT;
+        //System.out.println(threat + " calculateCloseAirport");
+        return threat;
     }
 
     public double calculateCloseConnection(City fromCity, City toCity, int rounds) {
@@ -224,7 +272,9 @@ public class ThreatEvaluator {
         }
         if (!fromCityIsInfected) threat = 0;
         threat = getThreatBoostedByRounds(threat, rounds);
-        return threat * FACTOR_CLOSE_CONNECTION;
+        threat *= FACTOR_CLOSE_CONNECTION;
+        //System.out.println(threat + " calculateCloseConnection");
+        return threat;
     }
 
     public double calculateDevelopVaccine(Pathogen pathogen) {
@@ -232,17 +282,23 @@ public class ThreatEvaluator {
         double pathogenThreat = ThreatIndicator.getPathogenThreatIndicator(pathogen);
         threat *= pathogenThreat;
         ArrayList<City> cities = CityProvider.getCities();
+        int cityWithPathogenOutbreakCount = 0;
+        double averageCityThreat = 0;
         for (City city : cities) {
             ArrayList<Pathogen> pathogensInCity = city.getPathogensInCity();
             if (pathogensInCity != null) {
                 for (Pathogen pathogenInCity : pathogensInCity) {
                     if (pathogen.getName().equals(pathogenInCity.getName())) {
-                        threat *= (FACTOR_OUTBREAK * ThreatIndicator.getCityThreatIndicator(city));
+                        averageCityThreat += ThreatIndicator.getCityThreatIndicator(city);
+                        cityWithPathogenOutbreakCount++;
                     }
                 }
             }
         }
-        return threat * FACTOR_DEVELOP_VACCINE;
+        averageCityThreat = average(averageCityThreat, cityWithPathogenOutbreakCount);
+        threat *= FACTOR_DEVELOP_VACCINE * averageCityThreat;
+        //System.out.println(threat + " calculateDevelopVaccine");
+        return threat;
     }
 
     public double calculateDeployVaccine(City city, Pathogen pathogen) {
@@ -264,16 +320,21 @@ public class ThreatEvaluator {
         ArrayList<City> connectedCities = CityProvider.getConnectedCities(city);
         ArrayList<City> reachableCities;
         if (city.hasCityPathogenOutbreak(pathogen)) {
+            double averageCityThreat = 0;
+            int cityCount = 0;
             if (!nearCities.isEmpty() || !connectedCities.isEmpty()) {
                 reachableCities = mergeArrayListOfCityAndRemoveDuplicates(nearCities, connectedCities);
                 for (City reachableCity : reachableCities) {
                     //Wenn die Ausbreitung in der Stadt eingedämpft wird, welche Auswirkung hätte dies auf umliegende Städte
                     if (!reachableCity.hasCityPathogenOutbreak(pathogen)) {
                         double reachableCityThreat = ThreatIndicator.getCityThreatIndicator(reachableCity);
-                        threat *= (FACTOR_REACHABLE_CITY * (pathogenThreat * reachableCityThreat));
+                        averageCityThreat += pathogenThreat * reachableCityThreat;
+                        cityCount++;
                     }
                 }
             }
+            averageCityThreat = average(averageCityThreat, cityCount);
+            threat *= FACTOR_REACHABLE_CITY * averageCityThreat;
         } else {
             ArrayList<City> citiesWithConnectionToCurrentCity = CityProvider.getCitiesWhichHaveConnectionToGivenCity(city);
             if (!citiesWithConnectionToCurrentCity.isEmpty()) {
@@ -290,22 +351,27 @@ public class ThreatEvaluator {
                 threat *= getThreatOfCityWithPathogen(FACTOR_NEAR_CITY_HAS_PATHOGEN, nearCities, pathogen, pathogenThreat);
             }
         }
-        return threat * FACTOR_DEPLOY_VACCINE;
+        threat *= FACTOR_DEPLOY_VACCINE;
+        //System.out.println(threat + " calculateDeployVaccine");
+        return threat;
     }
 
     public double calculateExertInfluence(City city) {
         double threat = 1;
         double economy = city.getEconomy();
         threat *= randomlyChangeValueThreat(economy, false);
-
-        return threat * FACTOR_EXERT_INFLUENCE;
+        threat *= FACTOR_EXERT_INFLUENCE;
+        //System.out.println(threat + " calculateExertInfluence");
+        return threat;
     }
 
     public double calculateCallElection(City city) {
         double threat = 1;
         double government = city.getGovernment();
         threat *= randomlyChangeValueThreat(government, false);
-        return threat * FACTOR_CALL_ELECTION;
+        threat *= FACTOR_CALL_ELECTION;
+        //System.out.println(threat + " calculateCallElection");
+        return threat;
     }
 
     public double calculateApplyHygienicMeasures(City city) {
@@ -324,14 +390,18 @@ public class ThreatEvaluator {
             }
         }
         threat *= (1 + (FACTOR_IMPACT_OF_PREVALENCE * (1 - prevalence)));
-        return threat * FACTOR_APPLY_HYGIENIC_MEASURES;
+        threat *= FACTOR_APPLY_HYGIENIC_MEASURES;
+        //System.out.println(threat + " calculateApplyHygienicMeasures");
+        return threat;
     }
 
     public double calculateLaunchCampaign(City city) {
         double threat = 1;
         double cityAwareness = city.getAwareness();
         threat *= randomlyChangeValueThreat(cityAwareness, true);
-        return threat * FACTOR_LAUNCH_CAMPAIGN;
+        threat *= FACTOR_LAUNCH_CAMPAIGN;
+        //System.out.println(threat + " calculateLaunchCampaign");
+        return threat;
     }
 
     public double calculateEndRound() {
@@ -382,11 +452,11 @@ public class ThreatEvaluator {
     }
 
     private double getPathogenCityThreat(double cityThreat, ArrayList<Double> pathogensThreat) {
-        double threat = 1;
+        double threat = 0;
         for (double pathogenThreat : pathogensThreat) {
-            threat *= cityThreat * pathogenThreat;
+            threat += cityThreat * pathogenThreat;
         }
-        return threat;
+        return average(threat, pathogensThreat.size());
     }
 
     private ArrayList<City> mergeArrayListOfCityAndRemoveDuplicates(ArrayList<City> arrayListOne, ArrayList<City> arrayListTwo) {
@@ -415,17 +485,18 @@ public class ThreatEvaluator {
     }
 
     private double getThreatOfCityWithPathogen(double factor, ArrayList<City> cities, Pathogen pathogen, double pathogenThreat) {
-        double threat = 1;
+        double threat = 0;
+        int cityCount = 0;
         for (City cityWithConnectionToCurrentCity : cities) {
             if (cityWithConnectionToCurrentCity.hasCityPathogenOutbreak(pathogen)) {
                 double gameCityThreat = ThreatIndicator.getCityThreatIndicator(cityWithConnectionToCurrentCity);
-                threat *= (factor * (pathogenThreat * gameCityThreat));
+                threat += pathogenThreat * gameCityThreat;
             }
         }
-        return threat;
+        return average(threat, cityCount) * factor;
     }
 
     private double getThreatBoostedByRounds(double threat, int rounds){
-        return (threat / THREAT_THRESHOLD) * Math.pow(FACTOR_BOOST_ROUND_THREAT, rounds);
+        return threat * Math.pow(FACTOR_BOOST_ROUND_THREAT, rounds);
     }
 }
