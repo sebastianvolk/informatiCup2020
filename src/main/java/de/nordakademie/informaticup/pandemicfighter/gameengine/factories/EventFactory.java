@@ -102,7 +102,9 @@ class EventFactory {
                     jsonEvent.get(KEY_ROUND).getAsInt()
             );
         } else if ("medicationDeployed".equals(eventType)) {
+            Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
             event = new MedicationDeployedEvent(
+                    pathogen,
                     jsonEvent.get(KEY_ROUND).getAsInt()
             );
         }else if ("vaccineDeployed".equals(eventType)) {

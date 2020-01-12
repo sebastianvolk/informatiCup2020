@@ -1,17 +1,17 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine;
 
 public class ValueUtility {
-    private static final double VERY_HIGH_VALUE_PATHOGEN = 1.1;
-    private static final double HIGH_VALUE_PATHOGEN = 1.05;
-    private static final double LOW_VALUE_PATHOGEN = 0.95;
-    private static final double VERY_LOW_VALUE_PATHOGEN = 0.9;
+    private static final double VERY_HIGH_VALUE_PATHOGEN = 1.2;
+    private static final double HIGH_VALUE_PATHOGEN = 1.1;
+    private static final double LOW_VALUE_PATHOGEN = 0.9;
+    private static final double VERY_LOW_VALUE_PATHOGEN = 0.8;
 
     private static final double MID_VALUE = 1;
 
-    private static final double VERY_HIGH_VALUE_CITY = 0.9;
-    private static final double HIGH_VALUE_CITY = 0.95;
-    private static final double LOW_VALUE_CITY = 1.05;
-    private static final double VERY_LOW_VALUE_CITY = 1.1;
+    private static final double VERY_HIGH_VALUE_CITY = 0.8;
+    private static final double HIGH_VALUE_CITY = 0.9;
+    private static final double LOW_VALUE_CITY = 1.1;
+    private static final double VERY_LOW_VALUE_CITY = 1.2;
 
     public static double getValueEqualToStringPathogen(String symbol){
         double value;

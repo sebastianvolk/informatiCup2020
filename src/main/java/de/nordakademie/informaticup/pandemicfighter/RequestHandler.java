@@ -32,12 +32,9 @@ public class RequestHandler implements HttpHandler {
                     .create();
             String reqBody = convertStreamToString(httpExchange.getRequestBody());
             JsonObject jsonRequestObject = gson.fromJson(reqBody, JsonObject.class);
-            int round = jsonRequestObject.get("round").getAsInt();
-            String outcome = jsonRequestObject.get("outcome").getAsString();
-            System.out.println("Round: " + round + " Outcome: " + outcome);
-            System.out.println(jsonRequestObject.toString());
             Game game = gameFactory.createGame(jsonRequestObject);
 
+            System.out.println("Round: " + game.getRound() + " Outcome: " + game.getOutcome() + " Points: " + game.getPoints());
             String response = new GameExecutor(game)
                     .getAction()
                     .toString();

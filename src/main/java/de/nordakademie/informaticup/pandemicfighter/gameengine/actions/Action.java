@@ -18,6 +18,9 @@ public abstract class Action {
     }
 
     public double getThreatIndicator() {
+        if (threatIndicator > 20) {
+            System.out.println("Oh no!");
+        }
         return threatIndicator;
     }
 

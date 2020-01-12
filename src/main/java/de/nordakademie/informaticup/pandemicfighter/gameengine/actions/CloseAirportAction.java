@@ -22,7 +22,7 @@ public class CloseAirportAction extends Action {
 
     @Override
     protected double calculateThreatIndicator() {
-        return new ThreatEvaluator().calculateCloseAirport(city);
+        return new ThreatEvaluator().calculateCloseAirport(city, rounds);
     }
 
     @Override
