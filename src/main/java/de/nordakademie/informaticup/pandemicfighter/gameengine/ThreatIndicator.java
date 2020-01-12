@@ -5,15 +5,15 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen
 
 public class ThreatIndicator {
 
-    private final static double FACTOR_PATHOGEN_INFECTIVITY = 1;
+    private final static double FACTOR_PATHOGEN_INFECTIVITY = 1.05;
     private final static double FACTOR_PATHOGEN_MOBILITY = 1;
     private final static double FACTOR_PATHOGEN_DURATION = 1;
-    private final static double FACTOR_PATHOGEN_LETHALITY = 1;
+    private final static double FACTOR_PATHOGEN_LETHALITY = 1.08;
 
     private final static double FACTOR_CITY_ECONOMY = 1;
     private final static double FACTOR_CITY_GOVERNMENT = 1;
-    private final static double FACTOR_CITY_HYGIENE = 1;
-    private final static double FACTOR_CITY_AWARENESS = 1;
+    private final static double FACTOR_CITY_HYGIENE = 1.08;
+    private final static double FACTOR_CITY_AWARENESS = 1.05;
 
     public static double getPathogenThreatIndicator(Pathogen pathogen) {
         double infectivityThreat = pathogen.getInfectivity() * FACTOR_PATHOGEN_INFECTIVITY;

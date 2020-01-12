@@ -22,7 +22,7 @@ public class ActionCreator {
         ArrayList<Pathogen> pathogens = getPathogensFromPathogenEncounteredEvents(game.getEventsByType("pathogenEncountered"));
         ArrayList<Action> actions = new ArrayList<>();
         actions.add(new EndRoundAction());
-        //actions.addAll(getAllPossiblePutUnderQuarantineActions(cities));
+        actions.addAll(getAllPossiblePutUnderQuarantineActions(cities));
         actions.addAll(getAllPossibleCloseAirportActions(cities));
         actions.addAll(getAllPossibleCloseConnectionActions(cities));
         actions.addAll(getAllPossibleDevelopVaccineActions(pathogens));
