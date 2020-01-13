@@ -13,8 +13,8 @@ public class VaccineDeployedEvent extends Event{
         this.pathogen = pathogen;
     }
 
-    public String getPathogen() {
-        return pathogen.getName();
+    public Pathogen getPathogen() {
+        return pathogen;
     }
 
     public int getRound() {
