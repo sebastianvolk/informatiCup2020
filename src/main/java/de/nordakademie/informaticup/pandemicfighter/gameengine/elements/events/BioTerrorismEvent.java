@@ -10,6 +10,7 @@ public class BioTerrorismEvent extends Event {
         super("bioTerrorism");
         this.pathogen = pathogen;
         this.round = round;
+        this.pathogen = pathogen;
     }
 
     public Pathogen getPathogen() {
