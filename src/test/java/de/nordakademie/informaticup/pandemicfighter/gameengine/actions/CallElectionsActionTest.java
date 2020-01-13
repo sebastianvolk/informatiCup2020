@@ -28,6 +28,7 @@ public class CallElectionsActionTest {
         JsonObject expectedJsonObject = new JsonObject();
         expectedJsonObject.addProperty("type", "callElections");
         expectedJsonObject.addProperty("city", "Test City");
+
         assertEquals(expectedJsonObject, callElectionsAction.toJson());
     }
 }

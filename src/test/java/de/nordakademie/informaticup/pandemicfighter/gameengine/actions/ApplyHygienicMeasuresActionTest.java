@@ -28,6 +28,7 @@ public class ApplyHygienicMeasuresActionTest {
         JsonObject expectedJsonObject = new JsonObject();
         expectedJsonObject.addProperty("type", "applyHygienicMeasures");
         expectedJsonObject.addProperty("city", "Test City");
+
         assertEquals(expectedJsonObject, applyHygienicMeasuresAction.toJson());
     }
 }
