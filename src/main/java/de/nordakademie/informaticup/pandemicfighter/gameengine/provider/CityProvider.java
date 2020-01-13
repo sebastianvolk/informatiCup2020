@@ -6,7 +6,7 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import java.util.ArrayList;
 
 public class CityProvider {
-    private static ArrayList<City> cities;
+    private static ArrayList<City> cities = new ArrayList<>();
     private static final double MAX_DISTANCE = 1000;
 
     public static ArrayList<City> getCities() {
