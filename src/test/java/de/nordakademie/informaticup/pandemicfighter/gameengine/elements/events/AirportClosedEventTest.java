@@ -1,6 +1,5 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,5 +43,19 @@ public class AirportClosedEventTest {
         assertNotEquals(160, airportClosedEvent.getUntilRound());
         assertNotEquals(12, airportClosedEvent2.getUntilRound());
         assertNotEquals(6, airportClosedEvent3.getUntilRound());
+    }
+
+    @Test
+    public void getType() {
+        assertEquals("airportClosed", airportClosedEvent.getType());
+        assertEquals("airportClosed", airportClosedEvent2.getType());
+        assertEquals("airportClosed", airportClosedEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("airportOpened", airportClosedEvent.getType());
+        assertNotEquals("closedAirport", airportClosedEvent2.getType());
+        assertNotEquals("close", airportClosedEvent3.getType());
     }
 }

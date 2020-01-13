@@ -49,4 +49,18 @@ public class MedicationAvailableEventTest {
         assertNotEquals(23, medicationAvailableEvent2.getSinceRound());
         assertNotEquals(66, medicationAvailableEvent3.getSinceRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("medicationAvailable", medicationAvailableEvent.getType());
+        assertEquals("medicationAvailable", medicationAvailableEvent2.getType());
+        assertEquals("medicationAvailable", medicationAvailableEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("medAvailable", medicationAvailableEvent.getType());
+        assertNotEquals("medicationAv", medicationAvailableEvent2.getType());
+        assertNotEquals("availableMed", medicationAvailableEvent3.getType());
+    }
 }

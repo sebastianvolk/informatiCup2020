@@ -30,4 +30,18 @@ public class AntiVaccinationismEventTest {
         assertNotEquals(12, antiVaccinationismEvent2.getSinceRound());
         assertNotEquals(66, antiVaccinationismEvent3.getSinceRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("antiVaccinationism", antiVaccinationismEvent.getType());
+        assertEquals("antiVaccinationism", antiVaccinationismEvent2.getType());
+        assertEquals("antiVaccinationism", antiVaccinationismEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("antiVacc", antiVaccinationismEvent.getType());
+        assertNotEquals("Vaccinationism", antiVaccinationismEvent2.getType());
+        assertNotEquals("VaccinationismAnti", antiVaccinationismEvent3.getType());
+    }
 }

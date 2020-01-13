@@ -44,4 +44,18 @@ public class QuarantineEventTest {
         assertNotEquals(52, quarantineEvent2.getUntilRound());
         assertNotEquals(16, quarantineEvent3.getUntilRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("quarantine", quarantineEvent.getType());
+        assertEquals("quarantine", quarantineEvent2.getType());
+        assertEquals("quarantine", quarantineEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("qu", quarantineEvent.getType());
+        assertNotEquals("quarantin", quarantineEvent2.getType());
+        assertNotEquals("quarantne", quarantineEvent3.getType());
+    }
 }

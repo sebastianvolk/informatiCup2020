@@ -61,4 +61,18 @@ public class ConnectionClosedEventTest {
         assertNotEquals(78, connectionClosedEvent2.getUntilRound());
         assertNotEquals(100, connectionClosedEvent3.getUntilRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("connectionClosed", connectionClosedEvent.getType());
+        assertEquals("connectionClosed", connectionClosedEvent2.getType());
+        assertEquals("connectionClosed", connectionClosedEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("connectionClose", connectionClosedEvent.getType());
+        assertNotEquals("connClosed", connectionClosedEvent2.getType());
+        assertNotEquals("closeConnection", connectionClosedEvent3.getType());
+    }
 }

@@ -49,4 +49,18 @@ public class PathogenEncounteredEventTest {
         assertNotEquals(87, pathogenEncounteredEvent2.getRound());
         assertNotEquals(200, pathogenEncounteredEvent3.getRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("pathogenEncountered", pathogenEncounteredEvent.getType());
+        assertEquals("pathogenEncountered", pathogenEncounteredEvent2.getType());
+        assertEquals("pathogenEncountered", pathogenEncounteredEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("pathEncountered", pathogenEncounteredEvent.getType());
+        assertNotEquals("pathogenEncounter", pathogenEncounteredEvent2.getType());
+        assertNotEquals("encounteredPathogen", pathogenEncounteredEvent3.getType());
+    }
 }

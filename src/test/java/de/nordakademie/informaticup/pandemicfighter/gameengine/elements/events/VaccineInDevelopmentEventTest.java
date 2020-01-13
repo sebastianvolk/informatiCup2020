@@ -63,4 +63,18 @@ public class VaccineInDevelopmentEventTest {
         assertNotEquals(49, vaccineInDevelopmentEvent2.getUntilRound());
         assertNotEquals(51, vaccineInDevelopmentEvent3.getUntilRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("vaccineInDevelopment", vaccineInDevelopmentEvent.getType());
+        assertEquals("vaccineInDevelopment", vaccineInDevelopmentEvent2.getType());
+        assertEquals("vaccineInDevelopment", vaccineInDevelopmentEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("vaccineDevelopment", vaccineInDevelopmentEvent.getType());
+        assertNotEquals("vaccInDevelopment", vaccineInDevelopmentEvent2.getType());
+        assertNotEquals("vaccDevelopment", vaccineInDevelopmentEvent3.getType());
+    }
 }

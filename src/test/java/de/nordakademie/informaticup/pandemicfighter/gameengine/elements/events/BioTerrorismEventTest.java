@@ -50,4 +50,18 @@ public class BioTerrorismEventTest {
         assertNotEquals(260, bioTerrorismEvent2.getRound());
         assertNotEquals(43, bioTerrorismEvent3.getRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("bioTerrorism", bioTerrorismEvent.getType());
+        assertEquals("bioTerrorism", bioTerrorismEvent2.getType());
+        assertEquals("bioTerrorism", bioTerrorismEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("bioTerror", bioTerrorismEvent.getType());
+        assertNotEquals("bioTerorism", bioTerrorismEvent2.getType());
+        assertNotEquals("bT", bioTerrorismEvent3.getType());
+    }
 }

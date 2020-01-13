@@ -44,4 +44,18 @@ public class UprisingEventTest {
         assertNotEquals(67, uprisingEvent2.getSinceRound());
         assertNotEquals(88, uprisingEvent3.getSinceRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("uprising", uprisingEvent.getType());
+        assertEquals("uprising", uprisingEvent2.getType());
+        assertEquals("uprising", uprisingEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("up", uprisingEvent.getType());
+        assertNotEquals("rising", uprisingEvent2.getType());
+        assertNotEquals("ur", uprisingEvent3.getType());
+    }
 }

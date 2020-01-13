@@ -30,4 +30,18 @@ public class LargeScalePanicEventTest {
         assertNotEquals(65, largeScalePanicEvent2.getSinceRound());
         assertNotEquals(79, largeScalePanicEvent3.getSinceRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("largeScalePanic", largeScalePanicEvent.getType());
+        assertEquals("largeScalePanic", largeScalePanicEvent.getType());
+        assertEquals("largeScalePanic", largeScalePanicEvent.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("largeScalePanik", largeScalePanicEvent.getType());
+        assertNotEquals("ScalePanicLarge", largeScalePanicEvent.getType());
+        assertNotEquals("largePanic", largeScalePanicEvent.getType());
+    }
 }

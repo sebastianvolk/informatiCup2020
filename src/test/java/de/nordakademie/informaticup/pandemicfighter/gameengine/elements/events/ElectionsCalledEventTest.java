@@ -30,4 +30,18 @@ public class ElectionsCalledEventTest {
         assertNotEquals(14, electionsCalledEvent2.getRound());
         assertNotEquals(77, electionsCalledEvent3.getRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("electionsCalled", electionsCalledEvent.getType());
+        assertEquals("electionsCalled", electionsCalledEvent2.getType());
+        assertEquals("electionsCalled", electionsCalledEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("elektionsCalled", electionsCalledEvent.getType());
+        assertNotEquals("electionsKalled", electionsCalledEvent2.getType());
+        assertNotEquals("electionsCall", electionsCalledEvent3.getType());
+    }
 }

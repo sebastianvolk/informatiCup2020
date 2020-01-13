@@ -30,4 +30,18 @@ public class HygienicMeasuresAppliedEventTest {
         assertNotEquals(78, hygienicMeasuresAppliedEvent2.getRound());
         assertNotEquals(55, hygienicMeasuresAppliedEvent3.getRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("hygienicMeasuresApplied", hygienicMeasuresAppliedEvent.getType());
+        assertEquals("hygienicMeasuresApplied", hygienicMeasuresAppliedEvent2.getType());
+        assertEquals("hygienicMeasuresApplied", hygienicMeasuresAppliedEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("hygMeasuresApplied", hygienicMeasuresAppliedEvent.getType());
+        assertNotEquals("hygienicMeasureApplied", hygienicMeasuresAppliedEvent2.getType());
+        assertNotEquals("hygienicApplied", hygienicMeasuresAppliedEvent3.getType());
+    }
 }

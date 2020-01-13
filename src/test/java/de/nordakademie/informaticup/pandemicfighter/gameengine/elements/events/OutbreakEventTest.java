@@ -63,4 +63,18 @@ public class OutbreakEventTest {
         assertNotEquals(52, outbreakEvent2.getSinceRound());
         assertNotEquals(87, outbreakEvent3.getSinceRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("outbreak", outbreakEvent.getType());
+        assertEquals("outbreak", outbreakEvent2.getType());
+        assertEquals("outbreak", outbreakEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("ob", outbreakEvent.getType());
+        assertNotEquals("breakout", outbreakEvent2.getType());
+        assertNotEquals("outbreakEvent", outbreakEvent3.getType());
+    }
 }

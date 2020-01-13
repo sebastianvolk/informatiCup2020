@@ -30,4 +30,18 @@ public class EconomicCrisisEventTest {
         assertNotEquals(600, economicCrisisEvent2.getSinceRound());
         assertNotEquals(80, economicCrisisEvent3.getSinceRound());
     }
+
+    @Test
+    public void getType() {
+        assertEquals("economicCrisis", economicCrisisEvent.getType());
+        assertEquals("economicCrisis", economicCrisisEvent2.getType());
+        assertEquals("economicCrisis", economicCrisisEvent3.getType());
+    }
+
+    @Test
+    public void getTypeFalseTest() {
+        assertNotEquals("economicKrisis", economicCrisisEvent.getType());
+        assertNotEquals("ecCrisis", economicCrisisEvent2.getType());
+        assertNotEquals("crisis", economicCrisisEvent3.getType());
+    }
 }
