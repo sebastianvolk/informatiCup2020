@@ -28,7 +28,7 @@ class EventFactory {
             event = new AntiVaccinationismEvent(jsonEvent.get(KEY_SINCE_ROUND).getAsInt());
         } else if ("bioTerrorism".equals(eventType)) {
             Pathogen pathogen = getPathogen(jsonEvent.get(KEY_PATHOGEN).getAsJsonObject());
-            event = new BioTerrorismEvent(jsonEvent.get(KEY_ROUND).getAsInt(), pathogen);
+            event = new BioTerrorismEvent(pathogen, jsonEvent.get(KEY_ROUND).getAsInt());
         } else if ("economicCrisis".equals(eventType)) {
             event = new EconomicCrisisEvent(jsonEvent.get(KEY_SINCE_ROUND).getAsInt());
         } else if ("largeScalePanic".equals(eventType)) {

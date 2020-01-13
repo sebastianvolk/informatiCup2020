@@ -5,11 +5,11 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.E
 import java.util.ArrayList;
 
 public abstract class ObjectWithEvents {
-    private ArrayList<Event> events;
+    private ArrayList<Event> events = new ArrayList<>();
 
     public ArrayList<Event> getEventsByType(String type) {
         ArrayList<Event> events = new ArrayList<>();
-        if (this.events != null && type != null) {
+        if (!this.events.isEmpty() && type != null) {
             for (Event event : this.events) {
                 if (type.equals(event.getType())) {
                     events.add(event);

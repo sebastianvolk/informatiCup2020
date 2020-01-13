@@ -129,7 +129,7 @@ public class ActionCreator {
                     boolean alreadyDeployed = false;
                     for (Event event : deployVaccineEvents) {
                         VaccineDeployedEvent vaccineDeployedEvent = (VaccineDeployedEvent) event;
-                        if (pathogen.getName().equals(vaccineDeployedEvent.getPathogen())) {
+                        if (pathogen.getName().equals(vaccineDeployedEvent.getPathogen().getName())) {
                             alreadyDeployed = true;
                         }
                     }

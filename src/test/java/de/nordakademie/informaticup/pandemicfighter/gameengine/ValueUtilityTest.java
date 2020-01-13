@@ -1,6 +1,5 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,11 +7,53 @@ import static org.junit.Assert.*;
 public class ValueUtilityTest {
 
     @Test
-    public void getValueEqualToStringPathogen() {
+    public void getValueEqualToStringPathogenVeryHighTest() {
+        assertEquals(1.2, ValueUtility.getValueEqualToStringPathogen("++"), 0.0);
     }
 
     @Test
-    public void getValueEqualToStringCity() {
+    public void getValueEqualToStringPathogenHighTest() {
+        assertEquals(1.1, ValueUtility.getValueEqualToStringPathogen("+"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringPathogenMiddleTest() {
+        assertEquals(1, ValueUtility.getValueEqualToStringPathogen("o"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringPathogenLowTest() {
+        assertEquals(0.9, ValueUtility.getValueEqualToStringPathogen("-"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringPathogenVeryLowTest() {
+        assertEquals(0.8, ValueUtility.getValueEqualToStringPathogen("--"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringCityVeryHighTest() {
+        assertEquals(0.8, ValueUtility.getValueEqualToStringCity("++"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringCityHighTest() {
+        assertEquals(0.9, ValueUtility.getValueEqualToStringCity("+"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringCityMiddleTest() {
+        assertEquals(1, ValueUtility.getValueEqualToStringCity("o"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringCityLowTest() {
+        assertEquals(1.1, ValueUtility.getValueEqualToStringCity("-"), 0.0);
+    }
+
+    @Test
+    public void getValueEqualToStringCityVeryLowTest() {
+        assertEquals(1.2, ValueUtility.getValueEqualToStringCity("--"), 0.0);
     }
 
     @Test
@@ -66,22 +107,42 @@ public class ValueUtilityTest {
     }
 
     @Test
-    public void getVeryHighValueCity() {
-        //assertEquals(1.2, ValueUtility.getVeryHighValuePathogen(), 0.0);
+    public void getVeryHighValueCityTest() {
+        assertEquals(0.8, ValueUtility.getVeryHighValueCity(), 0.0);
     }
 
     @Test
-    public void getHighValueCity() {
-        //assertEquals(1.2, ValueUtility.getVeryHighValuePathogen(), 0.0);
+    public void getVeryHighValueCityFalseTest() {
+        assertNotEquals(0.9, ValueUtility.getVeryHighValueCity(), 0.0);
     }
 
     @Test
-    public void getLowValueCity() {
-        //assertEquals(1.2, ValueUtility.getVeryHighValuePathogen(), 0.0);
+    public void getHighValueCityTest() {
+        assertEquals(0.9, ValueUtility.getHighValueCity(), 0.0);
     }
 
     @Test
-    public void getVeryLowValueCity() {
-        //assertEquals(1.2, ValueUtility.getVeryHighValuePathogen(), 0.0);
+    public void getHighValueCityFalseTest() {
+        assertNotEquals(0.8, ValueUtility.getHighValueCity(), 0.0);
+    }
+
+    @Test
+    public void getLowValueCityTest() {
+        assertEquals(1.1, ValueUtility.getLowValueCity(), 0.0);
+    }
+
+    @Test
+    public void getLowValueCityFalseTest() {
+        assertNotEquals(1.2, ValueUtility.getLowValueCity(), 0.0);
+    }
+
+    @Test
+    public void getVeryLowValueCityTest() {
+        assertEquals(1.2, ValueUtility.getVeryLowValueCity(), 0.0);
+    }
+
+    @Test
+    public void getVeryLowValueCityFalseTest() {
+        assertNotEquals(1.1, ValueUtility.getVeryLowValueCity(), 0.0);
     }
 }

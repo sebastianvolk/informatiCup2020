@@ -6,8 +6,9 @@ public class BioTerrorismEvent extends Event {
     private Pathogen pathogen;
     private int round;
 
-    public BioTerrorismEvent(int round, Pathogen pathogen) {
+    public BioTerrorismEvent(Pathogen pathogen, int round) {
         super("bioTerrorism");
+        this.pathogen = pathogen;
         this.round = round;
         this.pathogen = pathogen;
     }
