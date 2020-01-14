@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class ExertInfluenceActionTest {
-    ExertInfluenceAction exertInfluenceAction;
+    private ExertInfluenceAction exertInfluenceAction;
 
     @Before
     public void setUp() throws Exception {

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class CloseConnectionActionTest {
-    City fromCity;
-    City toCity;
+    private City fromCity;
+    private City toCity;
 
     @Before
     public void setUp() throws Exception {
