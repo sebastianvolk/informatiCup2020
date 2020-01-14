@@ -6,11 +6,6 @@ import java.util.ArrayList;
 
 public class DecisionMaker {
     private static final double FACTOR_POINT = 1.0103;
-    private int points;
-
-    public DecisionMaker(int points) {
-        this.points = points;
-    }
 
     public Action getBestAction(ArrayList<Action> actions) {
         Action bestAction = actions.get(0);

@@ -23,7 +23,7 @@ public class GameExecutor {
         Action action = new EndRoundAction();
         if ("pending".equals(game.getOutcome())) {
             ArrayList<Action> actions = new ActionCreator().getAllPossibleActions(game);
-            action = new DecisionMaker(game.getPoints()).getBestAction(actions);
+            action = new DecisionMaker().getBestAction(actions);
         }
         return action.toJson();
     }
