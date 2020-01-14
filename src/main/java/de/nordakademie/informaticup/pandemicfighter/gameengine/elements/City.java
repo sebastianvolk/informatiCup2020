@@ -16,6 +16,7 @@ public class City extends ObjectWithEvents {
     private double hygiene;
     private double awareness;
 
+
     public City(String name, double latitude, double longitude, ArrayList<String> connections) {
         this.name = name;
         this.latitude = latitude;
@@ -97,6 +98,17 @@ public class City extends ObjectWithEvents {
             OutbreakEvent outbreakEvent = (OutbreakEvent) event;
             if (pathogen.getName().equals(outbreakEvent.getPathogen().getName())) {
                 result = true;
+            }
+        }
+        return result;
+    }
+    public OutbreakEvent getCityOutBreakEvent(Pathogen pathogen){
+        OutbreakEvent result = null;
+        ArrayList<Event> outbreakEvents = getEventsByType("outbreak");
+        for (Event event : outbreakEvents) {
+            OutbreakEvent outbreakEvent = (OutbreakEvent) event;
+            if (pathogen.getName().equals(outbreakEvent.getPathogen().getName())) {
+                result = outbreakEvent;
             }
         }
         return result;
