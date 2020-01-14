@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.factories.GameFactory;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Game;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.GameExecutor;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Game;
+import de.nordakademie.informaticup.pandemicfighter.gameengine.factories.GameFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ public class RequestHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String path = httpExchange.getRequestURI().getPath();
 
-        IGameFactory gameFactory = new GameFactory();
+        GameFactory gameFactory = new GameFactory();
 
         if (method.equals("POST") && path.equals("/")) {
             Gson gson = new GsonBuilder()
