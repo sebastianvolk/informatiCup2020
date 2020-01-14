@@ -24,16 +24,16 @@ public class VaccineDeployedEventTest {
 
     @Test
     public void getPathogen() {
-        assertEquals("Hexapox",vaccineDeployedEvent.getPathogen());
-        assertEquals("Admiral",vaccineDeployedEvent2.getPathogen());
-        assertEquals("Neurodermantitis",vaccineDeployedEvent3.getPathogen());
+        assertEquals("Hexapox",vaccineDeployedEvent.getPathogen().getName());
+        assertEquals("Admiral",vaccineDeployedEvent2.getPathogen().getName());
+        assertEquals("Neurodermantitis",vaccineDeployedEvent3.getPathogen().getName());
     }
 
     @Test
     public void getPathogenFalseTest() {
-        assertNotEquals("Neurodermantitis",vaccineDeployedEvent.getPathogen());
-        assertNotEquals("Hexapox",vaccineDeployedEvent2.getPathogen());
-        assertNotEquals("Admiral",vaccineDeployedEvent3.getPathogen());
+        assertNotEquals("Neurodermantitis",vaccineDeployedEvent.getPathogen().getName());
+        assertNotEquals("Hexapox",vaccineDeployedEvent2.getPathogen().getName());
+        assertNotEquals("Admiral",vaccineDeployedEvent3.getPathogen().getName());
     }
 
     @Test

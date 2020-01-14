@@ -251,5 +251,4 @@ public class MedicationCabinetTest {
 
         assertEquals(0, MedicationCabinet.roundsUntilMedicationIsAvailable("Neurodermantotitis"));
     }
-
 }
