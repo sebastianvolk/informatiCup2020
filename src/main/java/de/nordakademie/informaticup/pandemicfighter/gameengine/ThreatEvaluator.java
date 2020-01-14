@@ -115,6 +115,9 @@ public class ThreatEvaluator {
 
         }
         threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_AIRPORT);
+        if (city.getEventsByType("quarantine").size() > 0) {
+            threat = 0;
+        }
         threat = threat * FACTOR_CLOSE_AIRPORT;
         return threat;
     }
@@ -123,6 +126,9 @@ public class ThreatEvaluator {
         double threat = getThreatOfCityAndPathogens(fromCity);
         threat = combineThreats(threat, ThreatIndicator.getCityThreatIndicator(toCity));
         threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_CONNECTION);
+        if (fromCity.getEventsByType("airportClosed").size() > 0 || fromCity.getEventsByType("quarantine").size() > 0) {
+            threat = 0;
+        }
         threat *= FACTOR_CLOSE_CONNECTION;
         return threat;
     }

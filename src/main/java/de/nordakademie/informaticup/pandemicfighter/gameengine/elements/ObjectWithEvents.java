@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public abstract class ObjectWithEvents {
     private ArrayList<Event> events = new ArrayList<>();
 
-    //sind diese events in einer bestimmten City oder ist das global.....
     public ArrayList<Event> getEventsByType(String type) {
         ArrayList<Event> events = new ArrayList<>();
         if (!this.events.isEmpty() && type != null) {
