@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameFactoryTest {
-    JsonObject jsonObject;
+    private JsonObject jsonObject;
 
     @Before
     public void setUp() throws Exception {

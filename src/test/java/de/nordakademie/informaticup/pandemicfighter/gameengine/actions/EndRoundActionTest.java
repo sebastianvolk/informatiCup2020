@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class EndRoundActionTest {
-    EndRoundAction endRoundAction;
+    private EndRoundAction endRoundAction;
 
     @Before
     public void setUp() throws Exception {

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class CityFactoryTest {
-    JsonObject jsonObject;
+    private JsonObject jsonObject;
 
     @Before
     public void setUp() throws Exception {

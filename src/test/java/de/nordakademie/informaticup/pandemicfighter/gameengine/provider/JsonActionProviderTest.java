@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class JsonActionProviderTest {
-    City city;
-    City city2;
-    Pathogen pathogen;
+    private City city;
+    private City city2;
+    private Pathogen pathogen;
 
     @Before
     public void setUp() throws Exception {

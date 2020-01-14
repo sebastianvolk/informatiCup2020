@@ -18,9 +18,9 @@ public class BioTerrorismEventTest {
         Pathogen pathogen2 = new Pathogen("Admiral", 1.1, 0.9, 1, 1.1);
         Pathogen pathogen3 = new Pathogen("Neurodermantits", 1, 0.9, 1, 0.9);
 
-        bioTerrorismEvent = new BioTerrorismEvent(3, pathogen);
-        bioTerrorismEvent2 = new BioTerrorismEvent(25, pathogen2);
-        bioTerrorismEvent3 = new BioTerrorismEvent(67, pathogen3);
+        bioTerrorismEvent = new BioTerrorismEvent(pathogen, 3);
+        bioTerrorismEvent2 = new BioTerrorismEvent(pathogen2, 25);
+        bioTerrorismEvent3 = new BioTerrorismEvent(pathogen3, 67);
     }
 
     @Test

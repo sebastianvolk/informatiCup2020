@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class DeployVaccineActionTest {
-    DeployVaccineAction deployVaccineAction;
+    private DeployVaccineAction deployVaccineAction;
 
     @Before
     public void setUp() throws Exception {

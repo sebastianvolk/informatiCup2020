@@ -9,8 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class EventFactoryTest {
-    EventFactory eventFactory;
-    JsonObject pathogenJsonObject;
+    private EventFactory eventFactory;
+    private JsonObject pathogenJsonObject;
 
     @Before
     public void setUp() throws Exception {

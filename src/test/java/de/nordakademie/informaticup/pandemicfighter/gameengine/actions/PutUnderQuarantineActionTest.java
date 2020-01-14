@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class PutUnderQuarantineActionTest {
-    City city;
+    private City city;
 
     @Before
     public void setUp() throws Exception {

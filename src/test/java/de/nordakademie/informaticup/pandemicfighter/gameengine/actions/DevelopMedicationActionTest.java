@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DevelopMedicationActionTest {
-    DevelopMedicationAction developMedicationAction;
+    private DevelopMedicationAction developMedicationAction;
 
     @Before
     public void setUp() throws Exception {
