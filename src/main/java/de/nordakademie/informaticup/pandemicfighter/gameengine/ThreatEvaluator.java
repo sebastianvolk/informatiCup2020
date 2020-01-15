@@ -53,34 +53,38 @@ public class ThreatEvaluator {
         double cityThreat = ThreatIndicator.getCityThreatIndicator(city);
         boolean cityHasPathogen = false;
         double prevalenceFactor = 1;
-        if (city.hasCityPathogenOutbreak(pathogen)) {
-            cityHasPathogen = true;
-            ArrayList<Event> medicationDeployedEvents = city.getEventsByType("medicationDeployed");
-            for (Event medicationDeployedevent : medicationDeployedEvents) {
-                MedicationDeployedEvent medicationDeployedEvent = (MedicationDeployedEvent) medicationDeployedevent;
-                if (medicationDeployedEvent.getRound() > GameProvider.getGame().getRound() - 4 &&
-                        medicationDeployedEvent.getPathogen().getName().equals(pathogen.getName())
-                ) {
-                    prevalenceFactor *= 0.7;
+        double threat = 0;
+        if (!isEveryThingAlright(city)) {
+            if (city.hasCityPathogenOutbreak(pathogen)) {
+                cityHasPathogen = true;
+                ArrayList<Event> medicationDeployedEvents = city.getEventsByType("medicationDeployed");
+                for (Event medicationDeployedevent : medicationDeployedEvents) {
+                    MedicationDeployedEvent medicationDeployedEvent = (MedicationDeployedEvent) medicationDeployedevent;
+                    if (medicationDeployedEvent.getRound() > GameProvider.getGame().getRound() - 4 &&
+                            medicationDeployedEvent.getPathogen().getName().equals(pathogen.getName())
+                    ) {
+                        prevalenceFactor *= 0.7;
+
+                    }
 
                 }
                 OutbreakEvent outbreakEvent = city.getCityOutBreakEvent(pathogen);
                 if (outbreakEvent != null) {
                     prevalenceFactor *= (PREVALENCE_FACTOR_BOOSTER + outbreakEvent.getPrevalence());
                 }
-            }
-
-        }
-        double threat = combineThreats(pathogenThreat * prevalenceFactor, cityThreat);
-        ArrayList<Event> bioTerrorismEvents = city.getEventsByType("bioTerrorism");
-        for (Event event : bioTerrorismEvents) {
-            BioTerrorismEvent bioTerrorismEvent = (BioTerrorismEvent) event;
-            if (bioTerrorismEvent.getRound() > GameProvider.getGame().getRound() - 3 && pathogen.getName().equals(bioTerrorismEvent.getPathogen().getName())) {
-                cityHasPathogen = true;
-                threat *= 1.3;
 
             }
+            threat = combineThreats(pathogenThreat * prevalenceFactor, cityThreat);
+            ArrayList<Event> bioTerrorismEvents = city.getEventsByType("bioTerrorism");
+            for (Event event : bioTerrorismEvents) {
+                BioTerrorismEvent bioTerrorismEvent = (BioTerrorismEvent) event;
+                if (bioTerrorismEvent.getRound() > GameProvider.getGame().getRound() - 3 && pathogen.getName().equals(bioTerrorismEvent.getPathogen().getName())) {
+                    cityHasPathogen = true;
+                    threat *= 1.3;
 
+                }
+
+            }
         }
         if (!cityHasPathogen) {
             threat = 0;
@@ -90,43 +94,51 @@ public class ThreatEvaluator {
     }
 
     public double calculatePutUnderQuarantine(City city, int rounds) {
-        double threat = getThreatOfCityAndPathogens(city);
-        threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_PUT_UNDER_QUARANTINE);
+        double threat = 0;
+        if (!isEveryThingAlright(city)) {
+            threat = getThreatOfCityAndPathogens(city);
+            threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_PUT_UNDER_QUARANTINE);
+        }
         threat *= FACTOR_PUT_UNDER_QUARANTINE;
         return threat;
     }
 
     public double calculateCloseAirport(City city, int rounds) {
-        double threat = getThreatOfCityAndPathogens(city);
-        ArrayList<City> citiesThatHaveAConnectionToThisCity = CityProvider.getCitiesWhichHaveConnectionToGivenCity(city);
-        double citiesThatHaveAConnectionToThisCityThreatAverage = 0;
-        for (City cityThatHasAConnection : citiesThatHaveAConnectionToThisCity) {
-            citiesThatHaveAConnectionToThisCityThreatAverage += getThreatOfCityAndPathogens(cityThatHasAConnection);
-        }
-        citiesThatHaveAConnectionToThisCityThreatAverage = average(citiesThatHaveAConnectionToThisCityThreatAverage, citiesThatHaveAConnectionToThisCity.size());
-        threat = combineThreats(threat, citiesThatHaveAConnectionToThisCityThreatAverage);
-        ArrayList<Event> bioTerrorismEvents = city.getEventsByType("bioTerrorism");
-        for (Event event : bioTerrorismEvents) {
-            BioTerrorismEvent bioTerrorismEvent = (BioTerrorismEvent) event;
-            if (bioTerrorismEvent.getRound() > GameProvider.getGame().getRound() - 3) {
-                threat *= 1.3;
+        double threat = 0;
+        if(!isEveryThingInConnectedCitiesAlright(city)) {
+            threat = getThreatOfCityAndPathogens(city);
+            ArrayList<City> citiesThatHaveAConnectionToThisCity = CityProvider.getCitiesWhichHaveConnectionToGivenCity(city);
+            double citiesThatHaveAConnectionToThisCityThreatAverage = 0;
+            for (City cityThatHasAConnection : citiesThatHaveAConnectionToThisCity) {
+                citiesThatHaveAConnectionToThisCityThreatAverage += getThreatOfCityAndPathogens(cityThatHasAConnection);
+            }
+            citiesThatHaveAConnectionToThisCityThreatAverage = average(citiesThatHaveAConnectionToThisCityThreatAverage, citiesThatHaveAConnectionToThisCity.size());
+            threat = combineThreats(threat, citiesThatHaveAConnectionToThisCityThreatAverage);
+            ArrayList<Event> bioTerrorismEvents = city.getEventsByType("bioTerrorism");
+            for (Event event : bioTerrorismEvents) {
+                BioTerrorismEvent bioTerrorismEvent = (BioTerrorismEvent) event;
+                if (bioTerrorismEvent.getRound() > GameProvider.getGame().getRound() - 3) {
+                    threat *= 1.3;
+
+                }
 
             }
-
-        }
-        threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_AIRPORT);
-        if (city.getEventsByType("quarantine").size() > 0) {
-            threat = 0;
+            threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_AIRPORT);
+            if (city.getEventsByType("quarantine").size() > 0) {
+                threat = 0;
+            }
         }
         threat = threat * FACTOR_CLOSE_AIRPORT;
         return threat;
     }
 
     public double calculateCloseConnection(City fromCity, City toCity, int rounds) {
+
         double threat = getThreatOfCityAndPathogens(fromCity);
         threat = combineThreats(threat, ThreatIndicator.getCityThreatIndicator(toCity));
         threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_CONNECTION);
-        if (fromCity.getEventsByType("airportClosed").size() > 0 || fromCity.getEventsByType("quarantine").size() > 0) {
+        if (fromCity.getEventsByType("airportClosed").size() > 0 || fromCity.getEventsByType("quarantine").size() > 0 ||
+                fromCity.getEventsByType("outbreak").size() == 0) {
             threat = 0;
         }
         threat *= FACTOR_CLOSE_CONNECTION;
@@ -151,7 +163,6 @@ public class ThreatEvaluator {
         }
         averageCityThreat = average(averageCityThreat, cityWithPathogenOutbreakCount);
         threat *= FACTOR_DEVELOP_VACCINE * averageCityThreat;
-        //System.out.println(threat + " calculateDevelopVaccine");
         return threat;
     }
 
@@ -208,7 +219,6 @@ public class ThreatEvaluator {
         ArrayList<Event> uprisingEvents = city.getEventsByType("uprising");
         for (Event event : uprisingEvents) {
             UprisingEvent uprisingEvent = (UprisingEvent) event;
-            System.out.println("Uprising: \n\n" + uprisingEvent.getParticipants());
             if (uprisingEvent.getSinceRound() > GameProvider.getGame().getRound() - 5 &&
                     (city.getPopulation() / uprisingEvent.getParticipants()) > 0.4
             ) {
@@ -312,6 +322,36 @@ public class ThreatEvaluator {
             average = threat / count;
         }
         return average;
+    }
+
+    private boolean isEveryThingAlright(City city) {
+        boolean result = false;
+        ArrayList<City> nearCities = CityProvider.getNearCities(city);
+        if (!hasCityOneOfTheOutBreaks(nearCities) && isEveryThingInConnectedCitiesAlright(city)) {
+            result = true;
+        }
+        return result;
+
+    }
+
+    private boolean isEveryThingInConnectedCitiesAlright(City city) {
+        boolean result = false;
+        ArrayList<City> connectedCites = CityProvider.getCitiesWhichHaveConnectionToGivenCity(city);
+        if (city.getEventsByType("outbreak").size() == 0 &&
+                !hasCityOneOfTheOutBreaks(connectedCites) && city.getEventsByType("bioTerrorism").size() == 0) {
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean hasCityOneOfTheOutBreaks(ArrayList<City> cities) {
+        boolean result = false;
+        for (City city : cities) {
+            if (city.getEventsByType("outbreak").size() > 0) {
+                result = true;
+            }
+        }
+        return result;
     }
 
 }

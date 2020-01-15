@@ -270,7 +270,7 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculatePutUnderQuarantineNoOutbreakTest() {
-        assertEquals(0.9, threatEvaluator.calculatePutUnderQuarantine(cityWithoutPathogenOutbreak, 1), 0.05);
+        assertEquals(0, threatEvaluator.calculatePutUnderQuarantine(cityWithoutPathogenOutbreak, 1), 0.0);
     }
 
     @Test
@@ -305,7 +305,7 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculateCloseConnectionNoOutbreakTest() {
-        assertEquals(0.6, threatEvaluator.calculateCloseConnection(cityWithoutPathogenOutbreak, cityWithPathogenOutbreak, 1), 0.05);
+        assertEquals(0, threatEvaluator.calculateCloseConnection(cityWithoutPathogenOutbreak, cityWithPathogenOutbreak, 1), 0.0);
     }
 
     @Test
