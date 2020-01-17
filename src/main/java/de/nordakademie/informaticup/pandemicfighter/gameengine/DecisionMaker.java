@@ -8,6 +8,7 @@ public class DecisionMaker {
     private static final double FACTOR_POINT = 1.0103;
 
     public Action getBestAction(ArrayList<Action> actions) {
+
         Action bestAction = actions.get(0);
         for (int i = 1; i < actions.size(); i++) {
             bestAction = getBetterAction(bestAction, actions.get(i));

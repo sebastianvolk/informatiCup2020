@@ -16,15 +16,15 @@ public class ThreatEvaluator {
 
     private static final double PREVALENCE_FACTOR_BOOSTER = 0.5;
 
-    private static final double FACTOR_END_ROUND = 1.22;
+    private static final double FACTOR_END_ROUND = 1.2;
 
     private static final double FACTOR_DEVELOP_MEDICATION = 1.4;
-    private static final double FACTOR_DEPLOY_MEDICATION = 0.85;
+    private static final double FACTOR_DEPLOY_MEDICATION = 0.7;
     private static final double FACTOR_PUT_UNDER_QUARANTINE = 0.98;
     private static final double FACTOR_CLOSE_AIRPORT = 0.9;
     private static final double FACTOR_CLOSE_CONNECTION = 0.72;
     private static final double FACTOR_DEVELOP_VACCINE = 1.7;
-    private static final double FACTOR_DEPLOY_VACCINE = 0.95;
+    private static final double FACTOR_DEPLOY_VACCINE = 0.5;
     private static final double FACTOR_EXERT_INFLUENCE = 0.9;
     private static final double FACTOR_CALL_ELECTION = 0.8;
     private static final double FACTOR_APPLY_HYGIENIC_MEASURES = 1.037;
@@ -89,6 +89,7 @@ public class ThreatEvaluator {
         if (!cityHasPathogen) {
             threat = 0;
         }
+        threat*=getPopulationFactor(city);
         threat *= FACTOR_DEPLOY_MEDICATION;
         return threat;
     }
@@ -162,6 +163,7 @@ public class ThreatEvaluator {
             }
         }
         averageCityThreat = average(averageCityThreat, cityWithPathogenOutbreakCount);
+
         threat *= FACTOR_DEVELOP_VACCINE * averageCityThreat;
         return threat;
     }
@@ -194,7 +196,9 @@ public class ThreatEvaluator {
         if (nearCityCounter > 4 || connectedCityCounter > 2) {
             threat *= 1.5;
         }
-        threat = combineThreats(threat, prevalenceFactor);
+
+        threat *= combineThreats(threat, prevalenceFactor);
+        threat*=getPopulationFactor(city);
         threat *= FACTOR_DEPLOY_VACCINE;
         return threat;
     }
@@ -204,7 +208,7 @@ public class ThreatEvaluator {
         ArrayList<Event> economicCrisisEvents = city.getEventsByType("economicCrisis");
         for (Event event : economicCrisisEvents) {
             EconomicCrisisEvent economicCrisisEvent = (EconomicCrisisEvent) event;
-            if (economicCrisisEvent.getSinceRound() > GameProvider.getGame().getRound() - 3) {
+            if (economicCrisisEvent.getSinceRound() > GameProvider.getGame().getRound() - 5) {
                 threat *= 1.3;
 
             }
@@ -231,12 +235,13 @@ public class ThreatEvaluator {
     }
 
     public double calculateApplyHygienicMeasures(City city) {
+
         double threat = randomlyChangeValueThreat(city.getHygiene(), true);
         ArrayList<Event> hygienicMeasuresAppliedEvents = city.getEventsByType("hygienicMeasuresApplied");
         for (Event event : hygienicMeasuresAppliedEvents) {
             HygienicMeasuresAppliedEvent hygienicMeasuresAppliedEvent = (HygienicMeasuresAppliedEvent) event;
             if (hygienicMeasuresAppliedEvent.getRound() > GameProvider.getGame().getRound() - 5) {
-                threat *= 0.7;
+                threat *= 0;
 
             }
 
@@ -246,18 +251,19 @@ public class ThreatEvaluator {
     }
 
     public double calculateLaunchCampaign(City city) {
+        boolean a = isEveryThingPerfect(city);
         double threat = randomlyChangeValueThreat(city.getAwareness(), true);
         ArrayList<Event> campaignLaunchedEvents = city.getEventsByType("campaignLaunched");
         for (Event event : campaignLaunchedEvents) {
             CampaignLaunchedEvent campaignLaunchedEvent = (CampaignLaunchedEvent) event;
             if (campaignLaunchedEvent.getRound() > GameProvider.getGame().getRound() - 5) {
-                threat *= 0.7;
+                threat *= 0;
             }
         }
         ArrayList<Event> antiVaccinationismEvents = city.getEventsByType("antiVaccinationism");
         for (Event event : antiVaccinationismEvents) {
             AntiVaccinationismEvent antiVaccinationismEvent = (AntiVaccinationismEvent) event;
-            if (antiVaccinationismEvent.getSinceRound() < GameProvider.getGame().getRound() - 5) {
+            if (antiVaccinationismEvent.getSinceRound() < GameProvider.getGame().getRound() - 3) {
                 threat *= 1.3;
             }
 
@@ -268,7 +274,7 @@ public class ThreatEvaluator {
 
     public double calculateEndRound() {
         double threat = FACTOR_END_ROUND;
-        if (GameProvider.getGame().getPoints() > 25) threat = 0;
+        if (GameProvider.getGame().getPoints() > 30) {threat = 0;}
         return threat;
     }
 
@@ -328,8 +334,11 @@ public class ThreatEvaluator {
         boolean result = false;
         ArrayList<City> nearCities = CityProvider.getNearCities(city);
         if (!hasCityOneOfTheOutBreaks(nearCities) && isEveryThingInConnectedCitiesAlright(city)) {
+
+            //System.out.println("Every thing is alright!!!!!");
             result = true;
         }
+
         return result;
 
     }
@@ -354,4 +363,33 @@ public class ThreatEvaluator {
         return result;
     }
 
+    public boolean isEveryThingPerfect(City city){
+        boolean result = false;
+        if((city.getAwareness() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
+                (city.getEconomy() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
+                (city.getHygiene() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
+                (city.getGovernment() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
+                isEveryThingAlright(city)
+        ){
+
+            result = true;
+        }
+        return result;
+    }
+    private double getPopulationFactor(City city){
+        double populationFactor = city.getPopulation() / GameProvider.getGame().getWorldAveragePopulation();
+       double result = 1;
+
+        if(populationFactor > 2){
+            result = 1.3;
+        }
+        else if(populationFactor > 1.5){
+            result = 1.2;
+        }
+        else if(populationFactor > 1){
+            result= 1.1;
+        }
+       return result;
+
+    }
 }
