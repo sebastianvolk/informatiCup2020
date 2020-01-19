@@ -250,22 +250,22 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculateDeployMedicationWithOutbreakTest() {
-        assertEquals(1.25, threatEvaluator.calculateDeployMedication(cityWithPathogenOutbreak, pathogen), 0.05);
+        assertEquals(1.0, threatEvaluator.calculateDeployMedication(cityWithPathogenOutbreak, pathogen), 0.05);
     }
 
     @Test
     public void calculateDeployMedicationWithMedicationDeployedTest() {
-        assertEquals(1.05, threatEvaluator.calculateDeployMedication(cityWithPharmaceuticalDeployed, pathogen), 0.05);
+        assertEquals(0.9, threatEvaluator.calculateDeployMedication(cityWithPharmaceuticalDeployed, pathogen), 0.05);
     }
 
     @Test
     public void calculateDeployMedicationWithBioTerrorismTest() {
-        assertEquals(1.6, threatEvaluator.calculateDeployMedication(cityWithBioTerrorism, pathogen), 0.05);
+        assertEquals(1.4, threatEvaluator.calculateDeployMedication(cityWithBioTerrorism, pathogen), 0.05);
     }
 
     @Test
     public void calculatePutUnderQuarantineTest() {
-        assertEquals(1.4, threatEvaluator.calculatePutUnderQuarantine(cityWithPathogenOutbreak, 1), 0.05);
+        assertEquals(1.5, threatEvaluator.calculatePutUnderQuarantine(cityWithPathogenOutbreak, 1), 0.05);
     }
 
     @Test
@@ -275,7 +275,7 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculatePutUnderQuarantineMoreRoundsTest() {
-        assertEquals(1.5, threatEvaluator.calculatePutUnderQuarantine(cityWithPathogenOutbreak, 2), 0.05);
+        assertEquals(1.7, threatEvaluator.calculatePutUnderQuarantine(cityWithPathogenOutbreak, 2), 0.05);
     }
 
     @Test
@@ -325,32 +325,32 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculateDevelopVaccineTest() {
-        assertEquals(3.1, threatEvaluator.calculateDevelopVaccine(pathogen), 0.05);
+        assertEquals(2.9, threatEvaluator.calculateDevelopVaccine(pathogen), 0.05);
     }
 
     @Test
     public void calculateDeployVaccineWithoutOutbreakTest() {
-        assertEquals(1.1, threatEvaluator.calculateDeployVaccine(cityWithoutPathogenOutbreak, pathogen), 0.05);
+        assertEquals(0.9, threatEvaluator.calculateDeployVaccine(cityWithoutPathogenOutbreak, pathogen), 0.05);
     }
 
     @Test
     public void calculateDeployVaccineWithOutbreakTest() {
-        assertEquals(0.9, threatEvaluator.calculateDeployVaccine(cityWithPathogenOutbreak, pathogen), 0.05);
+        assertEquals(0.8, threatEvaluator.calculateDeployVaccine(cityWithPathogenOutbreak, pathogen), 0.05);
     }
 
     @Test
     public void calculateDeployVaccineWithConnectedCityWithPathogenTest() {
-        assertEquals(1.3, threatEvaluator.calculateDeployVaccine(cityWithConnectionToInfectedCities, pathogen), 0.05);
+        assertEquals(1.6, threatEvaluator.calculateDeployVaccine(cityWithConnectionToInfectedCities, pathogen), 0.05);
     }
 
     @Test
     public void calculateExertInfluenceTest() {
-        assertEquals(1, threatEvaluator.calculateExertInfluence(cityWithoutPathogenOutbreak), 0.05);
+        assertEquals(0.9, threatEvaluator.calculateExertInfluence(cityWithoutPathogenOutbreak), 0.05);
     }
 
     @Test
     public void calculateExertInfluenceWithEconomicCrisisTest() {
-        assertEquals(1.3, threatEvaluator.calculateExertInfluence(cityWithEconomicCrisis), 0.05);
+        assertEquals(1.1, threatEvaluator.calculateExertInfluence(cityWithEconomicCrisis), 0.05);
     }
 
     @Test
@@ -360,7 +360,7 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculateCallElectionWithUprisingTest() {
-        assertEquals(1.2, threatEvaluator.calculateCallElection(cityWithUprising), 0.05);
+        assertEquals(1.5, threatEvaluator.calculateCallElection(cityWithUprising), 0.05);
     }
 
     @Test
@@ -370,12 +370,12 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculateApplyHygienicMeasuresTest() {
-        assertEquals(1.2, threatEvaluator.calculateApplyHygienicMeasures(cityWithPharmaceuticalDeployed), 0.05);
+        assertEquals(0.9, threatEvaluator.calculateApplyHygienicMeasures(cityWithPharmaceuticalDeployed), 0.05);
     }
 
     @Test
     public void calculateApplyHygienicMeasuresWithHygienicMeasuresAppliedTest() {
-        assertEquals(0.9, threatEvaluator.calculateApplyHygienicMeasures(cityWithHygienicMeasuresApplied), 0.05);
+        assertEquals(0, threatEvaluator.calculateApplyHygienicMeasures(cityWithHygienicMeasuresApplied), 0.0);
     }
 
     @Test
@@ -385,21 +385,21 @@ public class ThreatEvaluatorTest {
 
     @Test
     public void calculateLaunchCampaignTest() {
-        assertEquals(1.1, threatEvaluator.calculateLaunchCampaign(cityWithPharmaceuticalDeployed), 0.05);
+        assertEquals(0.8, threatEvaluator.calculateLaunchCampaign(cityWithPharmaceuticalDeployed), 0.05);
     }
 
     @Test
     public void calculateLaunchCampaignWithCampaignLaunchedTest() {
-        assertEquals(0.8, threatEvaluator.calculateLaunchCampaign(cityWithCampaignLaunched), 0.05);
+        assertEquals(0, threatEvaluator.calculateLaunchCampaign(cityWithCampaignLaunched), 0.0);
     }
 
     @Test
     public void calculateLaunchCampaignWithAntiVaccinationismTest() {
-        assertEquals(1.4, threatEvaluator.calculateLaunchCampaign(cityWithAntiVaccinationism), 0.05);
+        assertEquals(1.1, threatEvaluator.calculateLaunchCampaign(cityWithAntiVaccinationism), 0.05);
     }
 
     @Test
     public void calculateEndRoundTest() {
-        assertEquals(1.22, threatEvaluator.calculateEndRound(), 0.0);
+        assertEquals(1.2, threatEvaluator.calculateEndRound(), 0.0);
     }
 }

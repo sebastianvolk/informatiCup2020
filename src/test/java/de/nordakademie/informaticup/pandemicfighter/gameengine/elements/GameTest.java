@@ -19,6 +19,7 @@ public class GameTest {
     private ArrayList<Event> events;
     private Pathogen pathogen;
     private VaccineInDevelopmentEvent vaccineInDevelopmentEvent;
+    private ArrayList<City> cities;
 
     @Before
     public void setUp() throws Exception {
@@ -26,12 +27,13 @@ public class GameTest {
         game.setOutcome("pending");
         game.setPoints(20);
         game.setRound(3);
-        ArrayList<City> cities = new ArrayList<>();
+        cities = new ArrayList<>();
         City city1 = new City("Moskau", 2, 3, new ArrayList<String>());
         City city2 = new City("Berlin", 5, 6, new ArrayList<String>());
         cities.add(city1);
         cities.add(city2);
         game.setCities(cities);
+        game.setWorldAveragePopulation(122.45);
         pathogen = new Pathogen("Hexapox", 1, 1, 1, 1);
         events = new ArrayList<>();
         MedicationAvailableEvent medicationAvailableEvent = new MedicationAvailableEvent(pathogen, 4);
@@ -101,5 +103,11 @@ public class GameTest {
 
     @Test
     public void getCities() {
+        assertArrayEquals(cities.toArray(), game.getCities().toArray());
+    }
+
+    @Test
+    public void getWorldAveragePopulation() {
+        assertEquals(122.45, game.getWorldAveragePopulation(), 0.0);
     }
 }

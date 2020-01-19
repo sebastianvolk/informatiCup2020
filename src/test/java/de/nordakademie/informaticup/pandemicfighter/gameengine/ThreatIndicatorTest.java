@@ -2,7 +2,6 @@ package de.nordakademie.informaticup.pandemicfighter.gameengine;
 
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
-import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.events.VaccineInDevelopmentEvent;
 import org.junit.Before;
 import org.junit.Test;
 
