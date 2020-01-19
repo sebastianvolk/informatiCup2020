@@ -33,6 +33,5 @@ public class GameExecutor {
         CityProvider.setCities(game.getCities());
         MedicationCabinet.initialize(game);
         VaccineCabinet.initialize(game);
-
     }
 }

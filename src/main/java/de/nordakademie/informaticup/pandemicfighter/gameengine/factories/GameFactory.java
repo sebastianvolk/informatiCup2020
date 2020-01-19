@@ -48,11 +48,11 @@ public class GameFactory extends ObjectWithEventsFactory {
     }
 
     private double getAverageWorldPopulation(ArrayList<City> cities) {
-        double worldP = 0;
+        int worldPopulation = 0;
         for (City city : cities) {
-            worldP += city.getPopulation();
+            worldPopulation += city.getPopulation();
 
         }
-        return worldP / cities.size();
+        return (double) worldPopulation / cities.size();
     }
 }

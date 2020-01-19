@@ -40,7 +40,6 @@ public class ThreatEvaluator {
                 averageCityThreat += ThreatIndicator.getCityThreatIndicator(city);
                 cityWithPathogenOutbreakCount++;
             }
-
         }
         averageCityThreat = average(averageCityThreat, cityWithPathogenOutbreakCount);
         threat = combineThreats(threat, averageCityThreat);
@@ -64,15 +63,12 @@ public class ThreatEvaluator {
                             medicationDeployedEvent.getPathogen().getName().equals(pathogen.getName())
                     ) {
                         prevalenceFactor *= 0.7;
-
                     }
-
                 }
                 OutbreakEvent outbreakEvent = city.getCityOutBreakEvent(pathogen);
                 if (outbreakEvent != null) {
                     prevalenceFactor *= (PREVALENCE_FACTOR_BOOSTER + (outbreakEvent.getPrevalence()/2));
                 }
-
             }
             threat = combineThreats(pathogenThreat * prevalenceFactor, cityThreat);
             ArrayList<Event> bioTerrorismEvents = city.getEventsByType("bioTerrorism");
@@ -81,9 +77,7 @@ public class ThreatEvaluator {
                 if (bioTerrorismEvent.getRound() > GameProvider.getGame().getRound() - 3 && pathogen.getName().equals(bioTerrorismEvent.getPathogen().getName())) {
                     cityHasPathogen = true;
                     threat *= 1.3;
-
                 }
-
             }
         }
         if (!cityHasPathogen) {
@@ -129,9 +123,7 @@ public class ThreatEvaluator {
                 BioTerrorismEvent bioTerrorismEvent = (BioTerrorismEvent) event;
                 if (bioTerrorismEvent.getRound() > GameProvider.getGame().getRound() - 3) {
                     threat *= 1.3;
-
                 }
-
             }
             threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_AIRPORT);
             if (city.getEventsByType("quarantine").size() > 0) {
@@ -143,7 +135,6 @@ public class ThreatEvaluator {
     }
 
     public double calculateCloseConnection(City fromCity, City toCity, int rounds) {
-
         double threat = getThreatOfCityAndPathogens(fromCity);
         threat = combineThreats(threat, ThreatIndicator.getCityThreatIndicator(toCity));
         threat = getThreatBoostedByRounds(threat, rounds, FACTOR_BOOST_ROUND_THREAT_CLOSE_CONNECTION);
@@ -202,7 +193,7 @@ public class ThreatEvaluator {
             }
 
         }
-        if (nearCityCounter > 4 || connectedCityCounter > 2) {
+        if ((nearCityCounter > 4 || connectedCityCounter > 2) && prevalenceFactor >= 1) {
             threat *= 1.5;
         }
 
@@ -219,9 +210,7 @@ public class ThreatEvaluator {
             EconomicCrisisEvent economicCrisisEvent = (EconomicCrisisEvent) event;
             if (economicCrisisEvent.getSinceRound() > GameProvider.getGame().getRound() - 5) {
                 threat *= 1.3;
-
             }
-
         }
         threat *= getPopulationFactor(city);
         threat *= FACTOR_EXERT_INFLUENCE;
@@ -234,7 +223,7 @@ public class ThreatEvaluator {
         for (Event event : uprisingEvents) {
             UprisingEvent uprisingEvent = (UprisingEvent) event;
             if (uprisingEvent.getSinceRound() > GameProvider.getGame().getRound() - 5 &&
-                    (city.getPopulation() / uprisingEvent.getParticipants()) > 0.4
+                    ((double) city.getPopulation() / uprisingEvent.getParticipants()) > 0.4
             ) {
                 threat *= 1.5;
             }
@@ -253,9 +242,7 @@ public class ThreatEvaluator {
             HygienicMeasuresAppliedEvent hygienicMeasuresAppliedEvent = (HygienicMeasuresAppliedEvent) event;
             if (hygienicMeasuresAppliedEvent.getRound() > GameProvider.getGame().getRound() - 5) {
                 threat *= 0;
-
             }
-
         }
         threat *= getPopulationFactor(city);
         threat *= FACTOR_APPLY_HYGIENIC_MEASURES;
@@ -347,13 +334,9 @@ public class ThreatEvaluator {
         boolean result = false;
         ArrayList<City> nearCities = CityProvider.getNearCities(city);
         if (!hasCityOneOfTheOutBreaks(nearCities) && isEveryThingInConnectedCitiesAlright(city)) {
-
-            //System.out.println("Every thing is alright!!!!!");
             result = true;
         }
-
         return result;
-
     }
 
     private boolean isEveryThingInConnectedCitiesAlright(City city) {
@@ -376,7 +359,7 @@ public class ThreatEvaluator {
         return result;
     }
 
-    public boolean isEveryThingPerfect(City city){
+    private boolean isEveryThingPerfect(City city){
         boolean result = false;
         if((city.getAwareness() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
                 (city.getEconomy() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
@@ -384,7 +367,6 @@ public class ThreatEvaluator {
                 (city.getGovernment() == ValueUtility.getVeryHighValueCity() || city.getAwareness()==ValueUtility.getVeryHighValueCity()) &&
                 isEveryThingAlright(city)
         ){
-
             result = true;
         }
         return result;
@@ -392,7 +374,7 @@ public class ThreatEvaluator {
 
     private double getPopulationFactor(City city){
         double populationFactor = city.getPopulation() / GameProvider.getGame().getWorldAveragePopulation();
-       double result = 1;
+        double result = 1;
 
         if(populationFactor > 2){
             result = 1.3;
@@ -404,6 +386,5 @@ public class ThreatEvaluator {
             result= 1.1;
         }
        return result;
-
     }
 }

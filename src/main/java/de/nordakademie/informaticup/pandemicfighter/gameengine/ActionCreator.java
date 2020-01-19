@@ -14,9 +14,9 @@ import de.nordakademie.informaticup.pandemicfighter.gameengine.provider.cabinets
 
 import java.util.ArrayList;
 
-public class ActionCreator {
+class ActionCreator {
     private int availablePoints;
-    public ArrayList<Action> getAllPossibleActions(Game game) {
+    ArrayList<Action> getAllPossibleActions(Game game) {
         availablePoints = game.getPoints();
         ArrayList<City> cities = CityProvider.getCities();
         ArrayList<Pathogen> pathogens = getPathogensFromPathogenEncounteredEvents(game.getEventsByType("pathogenEncountered"));
