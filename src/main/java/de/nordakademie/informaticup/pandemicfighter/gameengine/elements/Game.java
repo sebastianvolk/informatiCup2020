@@ -3,6 +3,7 @@ package de.nordakademie.informaticup.pandemicfighter.gameengine.elements;
 import java.util.ArrayList;
 
 public class Game extends ObjectWithEvents {
+    private double worldAveragePopulation;
     private String outcome;
     private int round;
     private int points;
@@ -38,5 +39,13 @@ public class Game extends ObjectWithEvents {
 
     public void setCities(ArrayList<City> cities) {
         this.cities = cities;
+    }
+
+    public double getWorldAveragePopulation() {
+        return worldAveragePopulation;
+    }
+
+    public void setWorldAveragePopulation(double worldAveragePopulation) {
+        this.worldAveragePopulation = worldAveragePopulation;
     }
 }

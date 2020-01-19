@@ -1,6 +1,5 @@
 package de.nordakademie.informaticup.pandemicfighter.gameengine.provider;
 
-import de.nordakademie.informaticup.pandemicfighter.gameengine.ThreatIndicator;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 
 import java.util.ArrayList;

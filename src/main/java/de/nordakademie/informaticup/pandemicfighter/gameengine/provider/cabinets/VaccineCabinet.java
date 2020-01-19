@@ -46,12 +46,4 @@ public class VaccineCabinet {
         }
         return rounds;
     }
-
-    /*public static ArrayList<Pathogen> getDevelopedVaccines() {
-        return null;
-    }
-
-    public static ArrayList<Pathogen> getVaccinesInDevelopment() {
-        return null;
-    }*/
 }

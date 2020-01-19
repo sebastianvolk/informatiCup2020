@@ -29,6 +29,7 @@ public class GameFactory extends ObjectWithEventsFactory {
             if (jsonGame.has(KEY_ERROR)) {
                 System.out.println(jsonGame.get(KEY_ERROR).getAsString());
             }
+            game.setWorldAveragePopulation(getAverageWorldPopulation(game.getCities()));
         } catch (NullPointerException e) {
             System.out.println("Not all required fields were set.");
             e.printStackTrace();
@@ -44,5 +45,14 @@ public class GameFactory extends ObjectWithEventsFactory {
             cities.add(cityFactory.createCity(jsonCity));
         }
         return cities;
+    }
+
+    private double getAverageWorldPopulation(ArrayList<City> cities) {
+        int worldPopulation = 0;
+        for (City city : cities) {
+            worldPopulation += city.getPopulation();
+
+        }
+        return (double) worldPopulation / cities.size();
     }
 }

@@ -46,28 +46,4 @@ public class MedicationCabinet {
         }
         return rounds;
     }
-
-    public static void setCurrentRound(int currentRound) {
-        MedicationCabinet.currentRound = currentRound;
-    }
-
-    public static void setMedicationInDevelopmentEvents(ArrayList<MedicationInDevelopmentEvent> medicationInDevelopmentEvents) {
-        MedicationCabinet.medicationInDevelopmentEvents = medicationInDevelopmentEvents;
-    }
-
-    public static void setMedicationAvailableEvents(ArrayList<MedicationAvailableEvent> medicationAvailableEvents) {
-        MedicationCabinet.medicationAvailableEvents = medicationAvailableEvents;
-    }
-
-    public static int getCurrentRound() {
-        return currentRound;
-    }
-
-    public static ArrayList<MedicationInDevelopmentEvent> getMedicationInDevelopmentEvents() {
-        return medicationInDevelopmentEvents;
-    }
-
-    public static ArrayList<MedicationAvailableEvent> getMedicationAvailableEvents() {
-        return medicationAvailableEvents;
-    }
 }

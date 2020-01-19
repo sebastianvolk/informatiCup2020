@@ -3,7 +3,7 @@ package de.nordakademie.informaticup.pandemicfighter.gameengine;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.City;
 import de.nordakademie.informaticup.pandemicfighter.gameengine.elements.Pathogen;
 
-public class ThreatIndicator {
+class ThreatIndicator {
 
     private final static double FACTOR_PATHOGEN_INFECTIVITY = 1.05;
     private final static double FACTOR_PATHOGEN_MOBILITY = 1;
@@ -15,7 +15,7 @@ public class ThreatIndicator {
     private final static double FACTOR_CITY_HYGIENE = 1.08;
     private final static double FACTOR_CITY_AWARENESS = 1.05;
 
-    public static double getPathogenThreatIndicator(Pathogen pathogen) {
+    static double getPathogenThreatIndicator(Pathogen pathogen) {
         double infectivityThreat = pathogen.getInfectivity() * FACTOR_PATHOGEN_INFECTIVITY;
         double mobilityThreat = pathogen.getMobility() * FACTOR_PATHOGEN_MOBILITY;
         double durationThreat = pathogen.getDuration() * FACTOR_PATHOGEN_DURATION;
@@ -23,7 +23,7 @@ public class ThreatIndicator {
         return infectivityThreat*mobilityThreat*durationThreat*lethalityThreat;
     }
 
-    public static double getCityThreatIndicator(City city){
+    static double getCityThreatIndicator(City city){
         double economyThreat = city.getEconomy() * FACTOR_CITY_ECONOMY;
         double governmentThreat = city.getGovernment() * FACTOR_CITY_GOVERNMENT;
         double hygieneThreat = city.getHygiene() * FACTOR_CITY_HYGIENE;
