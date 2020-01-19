@@ -193,5 +193,4 @@ public class GameExecutorTest {
         expectedAction.addProperty("pathogen", "Neurodermantotitis");
         assertNotEquals(expectedAction,gameExecutor.getAction());
     }
-
 }

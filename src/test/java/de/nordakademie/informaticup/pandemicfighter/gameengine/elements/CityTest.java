@@ -188,4 +188,9 @@ public class CityTest {
     public void hasCityPathogenOutbreakFalseTest() {
         assertFalse(city.hasCityPathogenOutbreak(pathogen2));
     }
+
+    @Test
+    public void getCityOutBreakEvent() {
+        assertEquals(outbreakEvent, city.getCityOutBreakEvent(pathogen));
+    }
 }
